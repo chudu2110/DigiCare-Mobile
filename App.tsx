@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { LandingPage as LandingPageExternal } from './pages/LandingPage';
 import { UserRole, View, CourseModule, QASubmission, ServicePoint, MapServiceType, RoadmapItem, LeaderboardUser, Scenario, AdminStats, ModuleCompletion, UserDistribution } from './types';
 import { PARENT_RESOURCES, QA_DATA, MAP_SERVICES, ICONS, LANDING_ICONS, ROADMAP_MS_DATA, ROADMAP_HS_DATA, LEADERBOARD_DATA, STUDENT_MS_COURSES, STUDENT_HS_COURSES, ADMIN_STATS_DATA, MODULE_COMPLETION_DATA, USER_DISTRIBUTION_DATA } from './constants';
@@ -442,37 +442,64 @@ const DashboardHeader: React.FC<{
   if(isStudent) homeView = View.STUDENT_DASHBOARD;
   else if(isParent) homeView = View.PARENT_DASHBOARD;
   else homeView = View.ADMIN_DASHBOARD;
+  const containerRef = useRef<HTMLDivElement>(null);
+  const btnRefs = useRef<Record<number, HTMLButtonElement | null>>({});
+  const [indicator, setIndicator] = useState<{ x: number; width: number }>({ x: 0, width: 0 });
 
-  const NavButton: React.FC<{ view: View; icon: React.ReactNode; label: string }> = ({ view, icon, label }) => {
-    const isActive = currentView === view;
-    return (
-      <button 
-        onClick={() => setView(view)} 
-        className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${isActive ? 'bg-white text-cyan-600 shadow-md' : 'text-slate-500 hover:bg-cyan-500/10'}`}
-      >
-        {icon}
-        <span>{label}</span>
-      </button>
-    );
-  };
+  const NavButton = React.forwardRef<HTMLButtonElement, { view: View; icon: React.ReactNode; label: string }>(
+    ({ view, icon, label }, ref) => {
+      const isActive = currentView === view;
+      return (
+        <button
+          ref={ref}
+          onClick={() => setView(view)}
+          className={`relative z-10 inline-flex h-10 items-center justify-center gap-2 px-4 rounded-full text-sm font-semibold transition-colors duration-300 whitespace-nowrap min-w-[120px] sm:min-w-[140px] ${isActive ? 'text-cyan-600' : 'text-slate-500 hover:bg-cyan-500/10'}`}
+        >
+          <span className="w-5 h-5 flex items-center justify-center">{icon}</span>
+          <span className="leading-none">{label}</span>
+        </button>
+      );
+    }
+  );
+
+  useLayoutEffect(() => {
+    const update = () => {
+      const container = containerRef.current;
+      const activeBtn = btnRefs.current[currentView as number];
+      if (!container || !activeBtn) return;
+      const x = activeBtn.offsetLeft;
+      const width = activeBtn.offsetWidth;
+      setIndicator({ x, width });
+    };
+    update();
+    const onResize = () => requestAnimationFrame(update);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [currentView]);
   
   return (
     <header className="sticky top-0 z-40 py-3">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14 bg-white/70 backdrop-blur-xl rounded-2xl p-2 shadow-lg shadow-slate-900/5 border border-slate-200">
+        <div className="relative flex items-center justify-between h-14 bg-white/70 backdrop-blur-xl rounded-2xl p-2 shadow-lg shadow-slate-900/5 border border-slate-200">
           <button onClick={onLogoClick} aria-label="Về Trang chủ" className="flex items-center space-x-2 rounded-full">
             {LANDING_ICONS.logo}
             <span className="text-xl font-bold text-slate-900">SafeLearn</span>
           </button>
-          <div className="hidden md:flex items-center space-x-1 bg-slate-100 p-1 rounded-full">
+          <div ref={containerRef} className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center space-x-1 bg-slate-100 p-1 rounded-full antialiased overflow-hidden">
+            <div
+              className="absolute top-1.5 bottom-1.5 left-0 rounded-full bg-gradient-to-br from-white/70 to-white/30 backdrop-blur-md ring-1 ring-white/50 shadow shadow-slate-900/10 transition-all duration-300 pointer-events-none z-0 overflow-hidden"
+              style={{ width: `${indicator.width}px`, transform: `translateX(${indicator.x}px)`, willChange: 'transform,width' }}
+            >
+              <div className="absolute inset-x-2 top-1 h-1 rounded-full bg-white/60"></div>
+            </div>
             {isAdmin ? (
-                 <NavButton view={View.ADMIN_DASHBOARD} icon={ICONS.admin} label="Thống kê" />
+                 <NavButton ref={(el) => (btnRefs.current[View.ADMIN_DASHBOARD] = el)} view={View.ADMIN_DASHBOARD} icon={ICONS.admin} label="Thống kê" />
             ) : (
                 <>
-                    <NavButton view={homeView} icon={ICONS.dashboard} label="Tổng quan" />
-                    {isStudent && <NavButton view={View.SCENARIOS} icon={ICONS.scenarios} label="Tình huống" />}
-                    <NavButton view={View.QA} icon={ICONS.qa} label="Hỏi Đáp" />
-                    <NavButton view={View.MAP} icon={ICONS.map} label="Bản Đồ" />
+                    <NavButton ref={(el) => (btnRefs.current[homeView] = el)} view={homeView} icon={ICONS.dashboard} label="Tổng quan" />
+                    {isStudent && <NavButton ref={(el) => (btnRefs.current[View.SCENARIOS] = el)} view={View.SCENARIOS} icon={ICONS.scenarios} label="Tình huống" />}
+                    <NavButton ref={(el) => (btnRefs.current[View.QA] = el)} view={View.QA} icon={ICONS.qa} label="Hỏi Đáp" />
+                    <NavButton ref={(el) => (btnRefs.current[View.MAP] = el)} view={View.MAP} icon={ICONS.map} label="Bản Đồ" />
                 </>
             )}
           </div>
