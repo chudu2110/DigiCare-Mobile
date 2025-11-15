@@ -15,6 +15,8 @@ export enum View {
   MAP,
   QA,
   SCENARIOS,
+  AUTH,
+  HOME,
 }
 
 export interface CourseModule {

@@ -7,7 +7,7 @@ import { ContactForm } from '../components/ContactForm';
 import { CountUp } from '../components/CountUp';
 import { TestimonialsCarousel } from '../components/TestimonialsCarousel';
 
-export const LandingPage: React.FC<{ onNavigate: (target: string) => void }> = ({ onNavigate }) => {
+export const LandingPage: React.FC<{ onNavigate: (target: string) => void; isLoggedIn?: boolean; userName?: string }> = ({ onNavigate, isLoggedIn = false, userName }) => {
   useScrollAnimation();
   useEffect(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, []);
   const [showTag, setShowTag] = useState(false);
@@ -18,7 +18,7 @@ export const LandingPage: React.FC<{ onNavigate: (target: string) => void }> = (
 
   return (
     <div className="bg-slate-50 font-sans">
-      <LandingHeader onNavigate={onNavigate} />
+      <LandingHeader onNavigate={onNavigate} isLoggedIn={isLoggedIn} userName={userName} />
       <main>
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -44,9 +44,15 @@ export const LandingPage: React.FC<{ onNavigate: (target: string) => void }> = (
                 </div>
               </div>
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <button onClick={() => onNavigate('Bắt đầu học')} className="flex items-center justify-center text-base font-bold text-white bg-cyan-500 px-6 py-3 rounded-lg hover:bg-cyan-600 transition-colors shadow-lg shadow-cyan-500/30">
-                  Bắt đầu học ngay {LANDING_ICONS.arrow}
-                </button>
+                {isLoggedIn ? (
+                  <button onClick={() => onNavigate('Khóa học')} className="flex items-center justify-center text-base font-bold text-white bg-cyan-600 px-6 py-3 rounded-lg hover:bg-cyan-700 transition-colors shadow-lg shadow-cyan-600/30">
+                    Xin chào, {userName || 'bạn'}
+                  </button>
+                ) : (
+                  <button onClick={() => onNavigate('Bắt đầu học')} className="flex items-center justify-center text-base font-bold text-white bg-cyan-500 px-6 py-3 rounded-lg hover:bg-cyan-600 transition-colors shadow-lg shadow-cyan-500/30">
+                    Bắt đầu học ngay {LANDING_ICONS.arrow}
+                  </button>
+                )}
                 <button onClick={() => onNavigate('Dành cho phụ huynh')} className="text-base font-bold text-slate-900 bg-white px-6 py-3 rounded-lg hover:bg-slate-100 transition-colors border-2 border-slate-200">
                   Dành cho phụ huynh
                 </button>

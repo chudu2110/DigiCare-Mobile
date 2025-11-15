@@ -189,7 +189,7 @@ const LandingHeader: React.FC<{ onNavigate: (target: string) => void }> = ({ onN
           <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} className="text-sm font-semibold text-slate-500 hover:text-cyan-500 transition-colors">Liên hệ</button>
         </nav>
         <div className="flex items-center space-x-2">
-          <button className="text-sm font-bold text-slate-900 px-4 py-2 rounded-lg hover:bg-slate-100 transition-colors">Đăng nhập</button>
+          <button onClick={() => onNavigate('Đăng nhập')} className="text-sm font-bold text-slate-900 px-4 py-2 rounded-lg hover:bg-slate-100 transition-colors">Đăng nhập</button>
           <button onClick={() => onNavigate('Bắt đầu học')} className="text-sm font-bold text-white bg-cyan-500 px-4 py-2 rounded-lg hover:bg-cyan-600 transition-colors">Bắt đầu học</button>
         </div>
       </div>
@@ -425,6 +425,117 @@ const LandingPage: React.FC<{ onNavigate: (target: string) => void }> = ({ onNav
 );
 };
 
+// --- AUTH PAGE (LOGIN / REGISTER, REDESIGNED) ---
+const AuthPage: React.FC<{
+  onLoginStudent: (name: string) => void;
+  onLoginParent: (name: string) => void;
+  onRegister: (name: string) => void;
+  onLoginAdmin: (name: string) => void;
+  onBack: () => void;
+}> = ({ onLoginStudent, onLoginParent, onRegister, onLoginAdmin, onBack }) => {
+  const [mode, setMode] = useState<'login' | 'register'>('login');
+  const [role, setRole] = useState<UserRole>(UserRole.STUDENT_MS);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const canSubmit = name.trim().length >= 2 && (mode === 'register' ? email && password : true);
+
+  const submit = () => {
+    if (!canSubmit) return;
+    if (role === UserRole.ADMIN) {
+      onLoginAdmin(name.trim());
+      return;
+    }
+    if (mode === 'register') {
+      onRegister(name.trim());
+    } else {
+      if (role === UserRole.PARENT) onLoginParent(name.trim());
+      else onLoginStudent(name.trim());
+    }
+  };
+
+  return (
+    <div className="min-h-screen grid lg:grid-cols-2 bg-slate-50">
+      <div className="relative hidden lg:flex items-center justify-center overflow-hidden bg-gradient-to-br from-cyan-100 via-white to-accent-purple/20">
+        <div className="absolute inset-0">
+          <div className="absolute -top-24 -left-24 w-72 h-72 rounded-full" style={{background:'radial-gradient(closest-side, rgba(6,182,212,0.28), transparent 70%)', filter:'blur(40px)', animation:'blobMove 18s ease-in-out infinite'}}></div>
+          <div className="absolute top-1/3 -right-20 w-80 h-80 rounded-full" style={{background:'radial-gradient(closest-side, rgba(168,85,247,0.24), transparent 70%)', filter:'blur(50px)', animation:'blobMove 22s ease-in-out infinite reverse'}}></div>
+          <div className="absolute bottom-0 left-1/4 w-64 h-64 rounded-full" style={{background:'radial-gradient(closest-side, rgba(249,115,22,0.20), transparent 70%)', filter:'blur(45px)', animation:'blobMove 26s ease-in-out infinite'}}></div>
+        </div>
+        <div className="relative z-10 text-center text-slate-900 px-10">
+          <div className="group mx-auto w-20 h-20 flex items-center justify-center rounded-2xl bg-white/20 backdrop-blur animate-heartbeat transition-all duration-300 hover:bg-white/30 hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] hover:ring-2 hover:ring-cyan-300">
+            {LANDING_ICONS.logo}
+          </div>
+          <h1 className="mt-6 text-4xl font-black">SafeLearn</h1>
+          <p className="mt-3 text-slate-700">Giáo dục giới tính an toàn, khoa học & thân thiện</p>
+          <div className="mt-8 grid grid-cols-3 gap-4 text-left">
+            <div className="group p-3 rounded-2xl bg-white/60 backdrop-blur transition-all duration-300 hover:bg-white/80 hover:shadow-xl hover:-translate-y-1">
+              <div className="w-9 h-9 rounded-full bg-white/80 flex items-center justify-center text-cyan-500 ring-1 ring-slate-200 transition-all duration-300 group-hover:ring-cyan-300 group-hover:shadow-[0_0_12px_rgba(6,182,212,0.35)]">{LANDING_ICONS.shield}</div>
+              <p className="mt-2 text-sm text-slate-700 transition-colors duration-300 group-hover:text-slate-900">100% Ẩn danh</p>
+            </div>
+            <div className="group p-3 rounded-2xl bg-white/60 backdrop-blur transition-all duration-300 hover:bg-white/80 hover:shadow-xl hover:-translate-y-1">
+              <div className="w-9 h-9 rounded-full bg-white/80 flex items-center justify-center text-accent-orange ring-1 ring-slate-200 transition-all duration-300 group-hover:ring-orange-300 group-hover:shadow-[0_0_12px_rgba(249,115,22,0.35)]">{LANDING_ICONS.expert}</div>
+              <p className="mt-2 text-sm text-slate-700 transition-colors duration-300 group-hover:text-slate-900">Chuyên gia hỗ trợ</p>
+            </div>
+            <div className="group p-3 rounded-2xl bg-white/60 backdrop-blur transition-all duration-300 hover:bg-white/80 hover:shadow-xl hover:-translate-y-1">
+              <div className="w-9 h-9 rounded-full bg-white/80 flex items-center justify-center text-accent-purple ring-1 ring-slate-200 transition-all duration-300 group-hover:ring-purple-300 group-hover:shadow-[0_0_12px_rgba(168,85,247,0.35)]">{LANDING_ICONS.interactive}</div>
+              <p className="mt-2 text-sm text-slate-700 transition-colors duration-300 group-hover:text-slate-900">Tương tác dễ hiểu</p>
+            </div>
+          </div>
+        </div>
+        <style>{`@keyframes blobMove { 0% { transform: translate(0,0) scale(1);} 50% { transform: translate(10px,-12px) scale(1.08);} 100% { transform: translate(0,0) scale(1);} }
+        @keyframes heartbeat { 0% { transform: scale(1);} 25% { transform: scale(1.08);} 40% { transform: scale(1);} 60% { transform: scale(1.08);} 100% { transform: scale(1);} }
+        .animate-heartbeat { animation: heartbeat 1.8s ease-in-out infinite; }`}</style>
+      </div>
+      <div className="flex items-center justify-center p-6 sm:p-10">
+        <div className="w-full max-w-md">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2 text-slate-900">
+              {LANDING_ICONS.logo}
+              <span className="text-xl font-extrabold">SafeLearn</span>
+            </div>
+            <button onClick={onBack} className="text-sm font-semibold text-slate-500 hover:text-cyan-600">Quay lại</button>
+          </div>
+          <div className="mt-6 flex gap-2 bg-slate-100 p-1 rounded-full w-fit">
+            <button onClick={() => setMode('login')} className={`px-4 py-2 text-sm font-bold rounded-full ${mode==='login' ? 'bg-white text-cyan-600 shadow' : 'text-slate-600'}`}>Đăng nhập</button>
+            <button onClick={() => setMode('register')} className={`px-4 py-2 text-sm font-bold rounded-full ${mode==='register' ? 'bg-white text-cyan-600 shadow' : 'text-slate-600'}`}>Đăng ký</button>
+          </div>
+          <div className="mt-6 space-y-4">
+            <div>
+              <label className="text-sm font-semibold text-slate-700">Họ tên</label>
+              <input value={name} onChange={(e)=>setName(e.target.value)} className="mt-1 w-full p-3 bg-white rounded-lg border border-slate-200 focus:ring-2 focus:ring-cyan-500" />
+            </div>
+            {mode==='register' && (
+              <div>
+                <label className="text-sm font-semibold text-slate-700">Email</label>
+                <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)} className="mt-1 w-full p-3 bg-white rounded-lg border border-slate-200 focus:ring-2 focus:ring-cyan-500" />
+              </div>
+            )}
+            {mode==='register' && (
+              <div>
+                <label className="text-sm font-semibold text-slate-700">Mật khẩu</label>
+                <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} className="mt-1 w-full p-3 bg-white rounded-lg border border-slate-200 focus:ring-2 focus:ring-cyan-500" />
+              </div>
+            )}
+          </div>
+          <div className="mt-6">
+            <p className="text-sm font-semibold text-slate-700 mb-2">Chọn vai trò</p>
+            <div className="flex flex-wrap gap-2">
+              {[UserRole.STUDENT_MS, UserRole.STUDENT_HS, UserRole.PARENT, UserRole.ADMIN].map(r => (
+                <button key={r} onClick={()=>setRole(r)} className={`px-3 py-1.5 text-sm font-bold rounded-full border ${role===r ? 'bg-cyan-50 text-cyan-700 border-cyan-300' : 'bg-white text-slate-700 border-slate-200'}`}>{r===UserRole.STUDENT_MS?'THCS':r===UserRole.STUDENT_HS?'THPT':r===UserRole.PARENT?'Phụ Huynh':'Admin'}</button>
+              ))}
+            </div>
+          </div>
+          <button disabled={!canSubmit} onClick={submit} className="mt-6 w-full bg-cyan-600 hover:bg-cyan-700 disabled:bg-slate-400 text-white font-bold py-3 rounded-lg transition">
+            {mode==='register' ? 'Đăng ký' : 'Tiếp tục'}
+          </button>
+          <p className="mt-3 text-xs text-slate-500 text-center">Đăng nhập Admin sẽ vào thẳng trang quản trị.</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 
 // --- MAIN APP (POST-LOGIN DASHBOARD) COMPONENTS ---
 const DashboardHeader: React.FC<{
@@ -506,11 +617,13 @@ const DashboardHeader: React.FC<{
           <div className="flex items-center space-x-2">
             {currentView !== View.PARENT_DASHBOARD && (
               <div className="bg-slate-100 p-1 rounded-full flex items-center">
-                {(
-                  currentView === View.STUDENT_DASHBOARD
-                    ? [UserRole.STUDENT_MS, UserRole.STUDENT_HS, UserRole.ADMIN]
-                    : [UserRole.STUDENT_MS, UserRole.STUDENT_HS, UserRole.PARENT, UserRole.ADMIN]
-                ).map(role => (
+                {(() => {
+                  const base = currentView === View.STUDENT_DASHBOARD
+                    ? [UserRole.STUDENT_MS, UserRole.STUDENT_HS]
+                    : [UserRole.STUDENT_MS, UserRole.STUDENT_HS, UserRole.PARENT];
+                  const roles = userRole === UserRole.ADMIN ? [...base, UserRole.ADMIN] : base;
+                  return roles;
+                })().map(role => (
                   <button key={role}
                       onClick={() => setUserRole(role)}
                       className={`px-3 py-1.5 text-xs font-bold rounded-full transition-colors duration-300 ${userRole === role ? 'bg-white text-cyan-600 shadow-md' : 'text-slate-500'}`}
@@ -997,6 +1110,7 @@ export default function App() {
   const [userRole, setUserRole] = useState<UserRole>(UserRole.STUDENT_MS);
   const [currentView, setCurrentView] = useState<View>(View.STUDENT_DASHBOARD);
   const [showSplash, setShowSplash] = useState(true);
+  const [username, setUsername] = useState<string>('');
 
   useEffect(() => {
     const onPop = (e: PopStateEvent) => {
@@ -1029,10 +1143,24 @@ export default function App() {
   };
 
   const handleNavigate = (target: string) => {
-    if (target === 'Phụ huynh' || target === 'Dành cho phụ huynh') {
-      pushAppState(true, UserRole.PARENT, View.PARENT_DASHBOARD);
-    } else {
-      pushAppState(true, UserRole.STUDENT_MS, View.STUDENT_DASHBOARD);
+    if (!isLoggedIn) {
+      if (
+        target === 'Bắt đầu học' ||
+        target === 'Khóa học' ||
+        target === 'Phụ huynh' ||
+        target === 'Dành cho phụ huynh' ||
+        target === 'Đăng nhập'
+      ) {
+        pushAppState(false, UserRole.STUDENT_MS, View.AUTH);
+      }
+      return;
+    }
+    if (isLoggedIn && target === 'Khóa học') {
+      if (userRole === UserRole.PARENT) {
+        pushAppState(true, userRole, View.PARENT_DASHBOARD);
+      } else {
+        pushAppState(true, userRole, View.STUDENT_DASHBOARD);
+      }
     }
   };
   
@@ -1051,7 +1179,22 @@ export default function App() {
     return <SplashScreen/>;
   }
   if (!isLoggedIn) {
+    if (currentView === View.AUTH) {
+      return (
+        <AuthPage
+          onLoginStudent={(name) => { setUsername(name); pushAppState(true, UserRole.STUDENT_MS, View.HOME); }}
+          onLoginParent={(name) => { setUsername(name); pushAppState(true, UserRole.PARENT, View.HOME); }}
+          onRegister={(name) => { setUsername(name); pushAppState(true, UserRole.STUDENT_MS, View.HOME); }}
+          onLoginAdmin={(name) => { setUsername(name); pushAppState(true, UserRole.ADMIN, View.ADMIN_DASHBOARD); }}
+          onBack={() => pushAppState(false, UserRole.STUDENT_MS, View.STUDENT_DASHBOARD)}
+        />
+      );
+    }
     return <LandingPageExternal onNavigate={handleNavigate} />;
+  }
+
+  if (currentView === View.HOME) {
+    return <LandingPageExternal onNavigate={handleNavigate} isLoggedIn={true} userName={username} />;
   }
 
   return <MainApp 

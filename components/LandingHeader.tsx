@@ -1,7 +1,7 @@
 import React from 'react';
 import { LANDING_ICONS } from '../constants';
 
-export const LandingHeader: React.FC<{ onNavigate: (target: string) => void }> = ({ onNavigate }) => {
+export const LandingHeader: React.FC<{ onNavigate: (target: string) => void; isLoggedIn?: boolean; userName?: string }> = ({ onNavigate, isLoggedIn = false, userName }) => {
   const scrollToId = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -26,8 +26,16 @@ export const LandingHeader: React.FC<{ onNavigate: (target: string) => void }> =
             <button onClick={() => scrollToId('contact')} className="text-sm font-semibold text-slate-500 hover:text-cyan-500 transition-colors">Liên hệ</button>
           </nav>
           <div className="flex items-center space-x-2">
-            <button className="text-sm font-bold text-slate-900 px-4 py-2 rounded-lg hover:bg-slate-100 transition-colors">Đăng nhập</button>
-            <button onClick={() => onNavigate('Bắt đầu học')} className="text-sm font-bold text-white bg-cyan-500 px-4 py-2 rounded-lg hover:bg-cyan-600 transition-colors">Bắt đầu học</button>
+            {isLoggedIn ? (
+              <button onClick={() => onNavigate('Khóa học')} className="text-sm font-bold text-white bg-cyan-600 px-4 py-2 rounded-lg hover:bg-cyan-700 transition-colors">
+                Xin chào, {userName || 'bạn'}
+              </button>
+            ) : (
+              <>
+                <button onClick={() => onNavigate('Đăng nhập')} className="text-sm font-bold text-slate-900 px-4 py-2 rounded-lg hover:bg-slate-100 transition-colors">Đăng nhập</button>
+                <button onClick={() => onNavigate('Bắt đầu học')} className="text-sm font-bold text-white bg-cyan-500 px-4 py-2 rounded-lg hover:bg-cyan-600 transition-colors">Bắt đầu học</button>
+              </>
+            )}
           </div>
         </div>
       </div>
