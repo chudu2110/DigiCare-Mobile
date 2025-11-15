@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LandingPage as LandingPageExternal } from './pages/LandingPage';
 import { UserRole, View, CourseModule, QASubmission, ServicePoint, MapServiceType, RoadmapItem, LeaderboardUser, Scenario, AdminStats, ModuleCompletion, UserDistribution } from './types';
-import { PARENT_RESOURCES, QA_DATA, MAP_SERVICES, ICONS, LANDING_ICONS, ROADMAP_DATA, LEADERBOARD_DATA, STUDENT_MS_COURSES, STUDENT_HS_COURSES, ADMIN_STATS_DATA, MODULE_COMPLETION_DATA, USER_DISTRIBUTION_DATA } from './constants';
+import { PARENT_RESOURCES, QA_DATA, MAP_SERVICES, ICONS, LANDING_ICONS, ROADMAP_MS_DATA, ROADMAP_HS_DATA, LEADERBOARD_DATA, STUDENT_MS_COURSES, STUDENT_HS_COURSES, ADMIN_STATS_DATA, MODULE_COMPLETION_DATA, USER_DISTRIBUTION_DATA } from './constants';
 import { moderateQuestion, generateScenario } from './services/geminiService';
 
 // Custom Hook for Scroll Animations
@@ -400,12 +400,12 @@ const LandingPage: React.FC<{ onNavigate: (target: string) => void }> = ({ onNav
                         <div className="scroll-animate bg-slate-50 p-6 rounded-2xl border border-slate-200 transition-transform duration-300 hover:-translate-y-1 relative overflow-hidden">
                             <div className="absolute -top-6 -right-6 w-20 h-20 rounded-full bg-cyan-100 animate-glowing"></div>
                             <h3 className="text-xl font-bold text-slate-900">Thông tin</h3>
-                            <p className="mt-2 text-slate-600">Chúng tôi sẵn sàng hỗ trợ và lắng nghe bạn.</p>
+                                <p className="mt-2 text-slate-600">Chúng tôi sẵn sàng hỗ trợ và lắng nghe bạn.</p>
                             <div className="mt-4 space-y-3 text-slate-700">
                                 <p><span className="font-semibold">Email:</span> support@safelearn.vn</p>
                                 <p><span className="font-semibold">Hotline:</span> 024-1234-5678</p>
                                 <p><span className="font-semibold">Thời gian:</span> 08:00–17:30 (T2–T6)</p>
-                                <p><span className="font-semibold">Địa chỉ:</span> Quận 1, TP.HCM</p>
+                                <p><span className="font-semibold">Địa chỉ:</span> Km 2, Quốc lộ 2B, xã Định Trung, thành phố Vĩnh Yên, tỉnh Vĩnh Phúc</p>
                             </div>
                             <div className="mt-6 flex gap-3">
                                 <a href="tel:02412345678" className="px-4 py-2 rounded-lg bg-cyan-500 text-white font-semibold hover:bg-cyan-600">Gọi Hotline</a>
@@ -477,16 +477,22 @@ const DashboardHeader: React.FC<{
             )}
           </div>
           <div className="flex items-center space-x-2">
-            <div className="bg-slate-100 p-1 rounded-full flex items-center">
-              {[UserRole.STUDENT_MS, UserRole.STUDENT_HS, UserRole.PARENT, UserRole.ADMIN].map(role => (
+            {currentView !== View.PARENT_DASHBOARD && (
+              <div className="bg-slate-100 p-1 rounded-full flex items-center">
+                {(
+                  currentView === View.STUDENT_DASHBOARD
+                    ? [UserRole.STUDENT_MS, UserRole.STUDENT_HS, UserRole.ADMIN]
+                    : [UserRole.STUDENT_MS, UserRole.STUDENT_HS, UserRole.PARENT, UserRole.ADMIN]
+                ).map(role => (
                   <button key={role}
                       onClick={() => setUserRole(role)}
                       className={`px-3 py-1.5 text-xs font-bold rounded-full transition-colors duration-300 ${userRole === role ? 'bg-white text-cyan-600 shadow-md' : 'text-slate-500'}`}
                   >
                      {role === UserRole.STUDENT_MS ? "THCS" : role === UserRole.STUDENT_HS ? "THPT" : role === UserRole.PARENT ? "Phụ Huynh" : "Admin"}
                   </button>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -702,6 +708,7 @@ const RoadmapPath = () => (
 );
 const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole }) => {
     const courses = userRole === UserRole.STUDENT_HS ? STUDENT_HS_COURSES : STUDENT_MS_COURSES;
+    const roadmap = userRole === UserRole.STUDENT_HS ? ROADMAP_HS_DATA : ROADMAP_MS_DATA;
     const RoadmapNode: React.FC<{ item: RoadmapItem }> = ({ item }) => {
         const isBadge = item.type === 'badge';
         const isCurrent = item.status === 'current';
@@ -788,7 +795,7 @@ const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole }) => {
                     <p className="text-slate-500 mb-8">Hoàn thành các bài học để nhận huy hiệu và thăng hạng!</p>
                     <div className="relative w-full h-[800px]">
                         <RoadmapPath />
-                        {ROADMAP_DATA.map((item) => (
+                        {roadmap.map((item) => (
                             <RoadmapNode key={item.id} item={item} />
                         ))}
                     </div>
@@ -917,19 +924,13 @@ const MainApp: React.FC<{
     
   const handleSetUserRole = (role: UserRole) => {
       setUserRole(role);
-      if (role === UserRole.ADMIN) {
-        setView(View.ADMIN_DASHBOARD);
-      } else {
-        const isStudentRole = role === UserRole.STUDENT_MS || role === UserRole.STUDENT_HS;
-        setView(isStudentRole ? View.STUDENT_DASHBOARD : View.PARENT_DASHBOARD);
-      }
   };
   
   const renderView = () => {
     const isStudent = userRole === UserRole.STUDENT_MS || userRole === UserRole.STUDENT_HS;
     switch(currentView) {
       case View.STUDENT_DASHBOARD:
-        return isStudent ? <StudentDashboard userRole={userRole} /> : <ParentDashboard setView={setView} />;
+        return <StudentDashboard userRole={userRole} />;
       case View.PARENT_DASHBOARD:
         return <ParentDashboard setView={setView} />;
       case View.ADMIN_DASHBOARD:

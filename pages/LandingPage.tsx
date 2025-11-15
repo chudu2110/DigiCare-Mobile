@@ -5,6 +5,7 @@ import { LandingHeader } from '../components/LandingHeader';
 import { LandingIllustration } from '../components/LandingIllustration';
 import { ContactForm } from '../components/ContactForm';
 import { CountUp } from '../components/CountUp';
+import { TestimonialsCarousel } from '../components/TestimonialsCarousel';
 
 export const LandingPage: React.FC<{ onNavigate: (target: string) => void }> = ({ onNavigate }) => {
   useScrollAnimation();
@@ -134,22 +135,17 @@ export const LandingPage: React.FC<{ onNavigate: (target: string) => void }> = (
             <div className="text-center max-w-3xl mx-auto scroll-animate">
               <h2 className="text-3xl font-bold text-slate-900">Học viên nói gì về chúng tôi</h2>
             </div>
-            <div className="mt-12 grid lg:grid-cols-2 gap-8">
-              <div className="bg-white p-8 rounded-xl border border-slate-200 shadow-lg shadow-slate-900/5 scroll-animate transition-transform duration-300 filter hover:brightness-105 hover:-translate-y-1 hover:shadow-xl hover:border-cyan-200">
-                <div className="flex items-start">
-                  {LANDING_ICONS.quotes}
-                  <p className="ml-4 text-slate-500 italic">"Nhờ SafeLearn, em không còn ngại ngùng khi nói về những thay đổi của cơ thể mình. Các bài học rất dễ hiểu và không hề khô khan như em nghĩ."</p>
-                </div>
-                <p className="text-right mt-4 font-bold text-slate-900">- An Nhiên, Học sinh lớp 8</p>
-              </div>
-              <div className="bg-white p-8 rounded-xl border border-slate-200 shadow-lg shadow-slate-900/5 scroll-animate transition-transform duration-300 filter hover:brightness-105 hover:-translate-y-1 hover:shadow-xl hover:border-cyan-200" style={{transitionDelay: '150ms'}}>
-                <div className="flex items-start">
-                  {LANDING_ICONS.quotes}
-                  <p className="ml-4 text-slate-500 italic">"Ứng dụng này là một công cụ tuyệt vời. Tôi đã biết cách trò chuyện với con trai về các vấn đề nhạy cảm một cách cởi mở và khoa học hơn."</p>
-                </div>
-                <p className="text-right mt-4 font-bold text-slate-900">- Anh Minh, Phụ huynh</p>
-              </div>
-            </div>
+            <TestimonialsCarousel
+              items={[
+                { quote: 'Nhờ SafeLearn, em không còn ngại ngùng khi nói về những thay đổi của cơ thể mình. Các bài học rất dễ hiểu và không hề khô khan như em nghĩ.', author: '- An Nhiên, Học sinh lớp 8' },
+                { quote: 'Ứng dụng này là một công cụ tuyệt vời. Tôi đã biết cách trò chuyện với con trai về các vấn đề nhạy cảm một cách cởi mở và khoa học hơn.', author: '- Anh Minh, Phụ huynh' },
+                { quote: 'Các tình huống mô phỏng giúp em biết cách ứng xử phù hợp. Em thấy tự tin hơn rất nhiều.', author: '- Tuấn Khoa, Học sinh lớp 9' },
+                { quote: 'Nội dung có tính khoa học, dễ hiểu và phù hợp với lứa tuổi. Tôi yên tâm khi con học trên SafeLearn.', author: '- Chị Hà, Phụ huynh' },
+                { quote: 'Phần hỏi đáp ẩn danh thật sự hữu ích, em có thể hỏi những điều khó nói một cách thoải mái.', author: '- Minh Châu, Học sinh lớp 10' },
+                { quote: 'SafeLearn giúp tôi có thêm kiến thức để đồng hành cùng con một cách đúng đắn.', author: '- Anh Phúc, Phụ huynh' }
+              ]}
+              intervalMs={3500}
+            />
           </div>
         </section>
 
@@ -182,7 +178,7 @@ export const LandingPage: React.FC<{ onNavigate: (target: string) => void }> = (
                   <p><span className="font-semibold">Email:</span> support@safelearn.vn</p>
                   <p><span className="font-semibold">Hotline:</span> 024-1234-5678</p>
                   <p><span className="font-semibold">Thời gian:</span> 08:00–17:30 (T2–T6)</p>
-                  <p><span className="font-semibold">Địa chỉ:</span> Quận 1, TP.HCM</p>
+                  <p><span className="font-semibold">Địa chỉ:</span> Km 2, Quốc lộ 2B, xã Định Trung, thành phố Vĩnh Yên, tỉnh Vĩnh Phúc</p>
                 </div>
                 <div className="mt-6">
                   <a href="tel:02412345678" className="px-4 py-2 rounded-lg bg-cyan-500 text-white font-semibold hover:bg-cyan-600">Gọi Hotline</a>
