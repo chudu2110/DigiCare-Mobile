@@ -1043,13 +1043,24 @@ const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole }) => {
         const isOwned = progress > 0;
         const medal = isOwned ? MEDAL_ICONS[idx % MEDAL_ICONS.length] : '🔒';
         return (
-            <div className="relative rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4 shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className={`relative rounded-2xl p-4 transition-all duration-300 ${isOwned ? 'bg-gradient-to-br from-cyan-500/8 to-accent-purple/8 border border-cyan-200 dark:border-cyan-700 shadow-xl hover:shadow-2xl shadow-cyan-500/25 dark:shadow-[0_0_18px_rgba(6,182,212,0.35)] hover:scale-[1.01]' : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl'}`}> 
+                {isOwned && (<div className="absolute -top-3 -right-3 w-12 h-12 rounded-full bg-cyan-400/25 blur-xl"></div>)}
+                {isOwned && (<div className="absolute -bottom-4 -left-2 w-16 h-16 rounded-full bg-accent-purple/20 blur-xl"></div>)}
+                {isOwned && (
+                  <div className="pointer-events-none absolute inset-0 rounded-2xl overflow-hidden">
+                    <div className="absolute -inset-8 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"></div>
+                    <div className="absolute top-3 right-7 w-2 h-2 bg-white/80 rounded-full animate-sparkle"></div>
+                    <div className="absolute bottom-4 left-10 w-1.5 h-1.5 bg-white/70 rounded-full animate-sparkle" style={{animationDelay:'300ms'}}></div>
+                    <div className="absolute top-6 left-6 w-2 h-2 bg-accent-orange/80 rounded-full animate-sparkle" style={{animationDelay:'600ms'}}></div>
+                  </div>
+                )}
                 <div className="flex items-center gap-4">
                     <div className="relative w-14 h-14">
-                        <div className="absolute inset-0 rounded-full" style={{ background: `conic-gradient(#06b6d4 ${progress * 3.6}deg, #e2e8f0 0deg)` }}></div>
-                        <div className="absolute inset-1 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center" title={isOwned ? 'Tiến trình' : 'Chưa bắt đầu'}>
-                            <span className="text-2xl">{medal}</span>
+                        <div className={`absolute inset-0 rounded-full ${isOwned ? 'animate-glowing' : ''}`} style={{ background: `conic-gradient(#06b6d4 ${progress * 3.6}deg, #e2e8f0 0deg)` }}></div>
+                        <div className={`absolute inset-1 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center ring-2 ring-white/60 ${isOwned ? 'animate-ringPulse' : ''}`} title={isOwned ? 'Tiến trình' : 'Chưa bắt đầu'}>
+                            <span className={`text-2xl ${isOwned ? 'animate-medalPulse' : ''}`}>{medal}</span>
                         </div>
+                        {isOwned && (<span className="absolute -inset-0.5 rounded-full bg-cyan-300/20 blur-md"></span>)}
                     </div>
                     <div className="flex-1 min-w-0">
                         <h4 className="font-bold text-slate-900 dark:text-white truncate">{module.title}</h4>
@@ -1087,7 +1098,14 @@ const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole }) => {
                         const medal = MEDAL_ICONS[idx % MEDAL_ICONS.length];
                         const xp = isOwned ? 100 : 0;
                         return (
-                            <div key={c.id} className={`flex items-center gap-3 p-4 rounded-xl border ${isOwned ? 'border-cyan-200 bg-cyan-50 dark:border-cyan-700/60 dark:bg-cyan-500/10' : 'border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800'}`}>
+                            <div key={c.id} className={`relative flex items-center gap-3 p-4 rounded-xl border transition-all ${isOwned ? 'border-cyan-200 bg-cyan-50 dark:border-cyan-700/60 dark:bg-cyan-500/10 shadow-lg hover:shadow-2xl shadow-cyan-500/25 hover:scale-[1.01]' : 'border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800'}`}>
+                                {isOwned && (<div className="absolute -top-2 -left-2 w-12 h-12 rounded-full bg-cyan-300/25 blur-xl"></div>)}
+                                {isOwned && (<div className="absolute -bottom-2 -right-3 w-16 h-16 rounded-full bg-accent-purple/20 blur-xl"></div>)}
+                                {isOwned && (
+                                  <div className="pointer-events-none absolute inset-0 rounded-xl overflow-hidden">
+                                    <div className="absolute -inset-8 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"></div>
+                                  </div>
+                                )}
                                 <div className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl ${isOwned ? 'bg-gradient-to-br from-cyan-200 to-cyan-300 text-cyan-800 ring-2 ring-cyan-400' : 'bg-slate-200 text-slate-500 ring-2 ring-slate-300'}`}>{isOwned ? medal : '🔒'}</div>
                                 <div className="flex-1 min-w-0">
                                     <p className="font-semibold text-slate-900 dark:text-white truncate">{c.title}</p>
@@ -1104,7 +1122,14 @@ const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole }) => {
                         const isOwned = b.status === 'completed';
                         const xp = 150;
                         return (
-                            <div key={b.id} className={`flex items-center gap-3 p-4 rounded-xl border ${isOwned ? 'border-cyan-200 bg-cyan-50 dark:border-cyan-700/60 dark:bg-cyan-500/10' : 'border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800'}`}>
+                            <div key={b.id} className={`relative flex items-center gap-3 p-4 rounded-xl border transition-all ${isOwned ? 'border-cyan-200 bg-cyan-50 dark:border-cyan-700/60 dark:bg-cyan-500/10 shadow-lg hover:shadow-2xl shadow-cyan-500/25 hover:scale-[1.01]' : 'border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800'}`}>
+                                {isOwned && (<div className="absolute -top-2 -left-2 w-12 h-12 rounded-full bg-cyan-300/25 blur-xl"></div>)}
+                                {isOwned && (<div className="absolute -bottom-2 -right-3 w-16 h-16 rounded-full bg-accent-purple/20 blur-xl"></div>)}
+                                {isOwned && (
+                                  <div className="pointer-events-none absolute inset-0 rounded-xl overflow-hidden">
+                                    <div className="absolute -inset-8 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"></div>
+                                  </div>
+                                )}
                                 <div className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl ${isOwned ? 'bg-gradient-to-br from-cyan-200 to-cyan-300 text-cyan-800 ring-2 ring-cyan-400' : 'bg-slate-200 text-slate-500 ring-2 ring-slate-300'}`}>{isOwned ? MEDAL_ICONS[idx % MEDAL_ICONS.length] : '🔒'}</div>
                                 <div className="flex-1 min-w-0">
                                     <p className="font-semibold text-slate-900 dark:text-white truncate">{b.title}</p>

@@ -84,6 +84,53 @@
       .animate-glowing {
         animation: glowing 2.5s ease-in-out infinite;
       }
+      @keyframes glowingGold {
+        0% { box-shadow: 0 0 6px rgba(245, 158, 11, 0.45), 0 0 12px rgba(245, 158, 11, 0.35); }
+        50% { box-shadow: 0 0 24px rgba(245, 158, 11, 0.7), 0 0 36px rgba(245, 158, 11, 0.55); }
+        100% { box-shadow: 0 0 6px rgba(245, 158, 11, 0.45), 0 0 12px rgba(245, 158, 11, 0.35); }
+      }
+      .animate-glowing-gold {
+        animation: glowingGold 2.6s ease-in-out infinite;
+      }
+      @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+      }
+      .animate-shimmer {
+        animation: shimmer 2.2s linear infinite;
+      }
+      @keyframes sparkle {
+        0% { transform: translateY(0) scale(0.8); opacity: 0; }
+        30% { opacity: 1; }
+        100% { transform: translateY(-14px) scale(1.2); opacity: 0; }
+      }
+      .animate-sparkle {
+        animation: sparkle 1.8s ease-in-out infinite;
+      }
+      @keyframes medalPulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.06); }
+        100% { transform: scale(1); }
+      }
+      .animate-medalPulse {
+        animation: medalPulse 1.8s ease-in-out infinite;
+      }
+      @keyframes ringPulse {
+        0% { box-shadow: 0 0 0 0 rgba(6, 182, 212, .45); }
+        70% { box-shadow: 0 0 0 14px rgba(6, 182, 212, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); }
+      }
+      .animate-ringPulse {
+        animation: ringPulse 2.6s ease-out infinite;
+      }
+      @keyframes ringPulseGold {
+        0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, .55); }
+        70% { box-shadow: 0 0 0 18px rgba(245, 158, 11, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+      }
+      .animate-ringPulseGold {
+        animation: ringPulseGold 2.6s ease-out infinite;
+      }
     </style>
   <script type="importmap">
 {
