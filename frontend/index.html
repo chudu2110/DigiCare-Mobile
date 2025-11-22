@@ -57,8 +57,39 @@
           }
         }
       }
-    </script>
-    <style>
+  </script>
+  <style>
+    .gender-poster { 
+      --female-start: #F43F5E; 
+      --female-end: #8B5CF6; 
+      --male-start: #22D3EE; 
+      --male-end: #3B82F6; 
+      --glow-opacity: 0.22;
+    }
+    .gender-poster .female-symbol,
+    .gender-poster .male-symbol {
+      transform-box: fill-box;
+      transform-origin: center;
+      transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+    .gender-poster .stack-dark { display: none; }
+    .dark .gender-poster .stack-light { display: none; }
+    .dark .gender-poster .stack-dark { display: inline; }
+    /* Dark mode: dùng tọa độ đảo từ light mà KHÔNG thay light */
+    .dark .gender-poster .female-symbol {
+      transform: translate(141px, -125px) rotate(225deg);
+    }
+    .dark .gender-poster .male-symbol {
+      transform: translate(-132px, 106px) rotate(135deg);
+    }
+    .dark .gender-poster {
+      --female-start: #F472B6;
+      --female-end: #A855F7;
+      --male-start: #06B6D4;
+      --male-end: #0EA5E9;
+      --glow-opacity: 0.35;
+    }
       .scroll-animate {
         opacity: 0;
         transform: translateY(30px);
@@ -131,7 +162,7 @@
       .animate-ringPulseGold {
         animation: ringPulseGold 2.6s ease-out infinite;
       }
-    </style>
+  </style>
   <script type="importmap">
 {
   "imports": {

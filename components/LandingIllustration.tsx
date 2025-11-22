@@ -1,30 +1,74 @@
 import React from 'react';
 
 export const LandingIllustration: React.FC = () => (
-  <svg viewBox="0 0 552 423" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg className="gender-poster" viewBox="0 0 552 423" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="femaleRing" x1="180" y1="250" x2="260" y2="330" gradientUnits="userSpaceOnUse">
+        <stop stopColor="var(--female-start)"/>
+        <stop offset="1" stopColor="var(--female-end)"/>
+      </linearGradient>
+      <linearGradient id="maleRing" x1="310" y1="170" x2="410" y2="110" gradientUnits="userSpaceOnUse">
+        <stop stopColor="var(--male-start)"/>
+        <stop offset="1" stopColor="var(--male-end)"/>
+      </linearGradient>
+      <radialGradient id="posterGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(320 210) scale(160 120)">
+        <stop stopColor="#FFFFFF" stopOpacity="var(--glow-opacity)"/>
+        <stop offset="1" stopColor="#FFFFFF" stopOpacity="0"/>
+      </radialGradient>
+      <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="8" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+    
+
+    {/* Base illustration */}
     <path d="M515.5 422.5H36.5C16.8939 422.5 1 405.606 1 386V36.5C1 16.8939 16.8939 1 36.5 1H515.5C535.106 1 551 16.8939 551 36.5V386C551 405.606 535.106 422.5 515.5 422.5Z" fill="#f8fafc"/>
     <path d="M515.5 422.5H36.5C16.8939 422.5 1 405.606 1 386V36.5C1 16.8939 16.8939 1 36.5 1H515.5C535.106 1 551 16.8939 551 36.5V386C551 405.606 535.106 422.5 515.5 422.5Z" stroke="#e2e8f0" strokeWidth="2"/>
     <path d="M12 28H538V108C538 117.941 529.941 126 520 126H30C20.0589 126 12 117.941 12 108V28Z" fill="#FFFFFF"/>
     <rect x="36" y="55" width="60" height="8" rx="4" fill="#e2e8f0"/>
     <rect x="454" y="55" width="60" height="8" rx="4" fill="#e2e8f0"/>
-    <path d="M165.421 278.411C165.518 274.191 165.613 269.967 165.706 265.74C165.741 264.125 165.776 262.51 165.811 260.895L165.889 257.666C166.216 243.688 176.94 232.964 190.918 232.637C198.835 232.449 206.516 235.14 212.185 240.219C216.516 244.113 219.601 249.23 220.825 254.918C221.751 259.201 221.91 263.606 221.91 267.973V273.71C221.91 275.325 221.872 276.936 221.833 278.544L221.79 280.354C221.748 282.164 221.705 283.974 221.663 285.784L221.579 289.814C221.378 298.599 214.375 305.601 205.59 305.802C199.645 305.94 193.84 303.882 189.28 299.882C183.695 295.142 180.201 288.548 179.467 281.42L179.379 280.596C179.292 279.772 179.204 278.948 179.117 278.124L165.421 278.411Z" fill="#A855F7" fillOpacity="0.2"/>
-    <path d="M293 361.5C303 361.5 329.5 363.5 330 358C330.5 352.5 301.167 347.833 293 347C284.833 346.167 251 349.5 251.5 354.5C252 359.5 283 361.5 293 361.5Z" fill="#64748b"/>
-    <path d="M261 247H323V358H261V247Z" fill="#F97316"/>
-    <rect x="261" y="247" width="62" height="111" fill="#FDBA74"/>
-    <path d="M291 199C291 185.745 301.745 175 315 175H317C330.255 175 341 185.745 341 199V247H291V199Z" fill="#0f172a"/>
-    <ellipse cx="316" cy="199.5" rx="25" ry="24.5" fill="#F97316"/>
-    <path d="M304.5 210C300.667 210.167 298.5 212.1 298.5 214C298.5 215.9 303.1 217.5 308 217C312.9 216.5 317.5 213.9 317.5 212C317.5 210.1 313.333 208.833 310.5 209C307.667 209.167 308.333 209.833 304.5 210Z" fill="white"/>
-    <path d="M414 361.5C404 361.5 377.5 363.5 377 358C376.5 352.5 405.833 347.833 414 347C422.167 346.167 456 349.5 455.5 354.5C455 359.5 424 361.5 414 361.5Z" fill="#64748b"/>
-    <path d="M386 270H442V358H386V270Z" fill="#00B8D9"/>
-    <rect x="386" y="270" width="56" height="88" fill="#5EEAD4"/>
-    <path d="M414 199C414 185.745 403.255 175 390 175H388C374.745 175 364 185.745 364 199V270H414V199Z" fill="#0f172a"/>
-    <ellipse cx="389" cy="199.5" rx="25" ry="24.5" fill="#00B8D9"/>
-    <path d="M400.5 210C404.333 210.167 406.5 212.1 406.5 214C406.5 215.9 401.9 217.5 397 217C392.1 216.5 387.5 213.9 387.5 212C387.5 210.1 391.667 208.833 394.5 209C397.333 209.167 396.667 209.833 400.5 210Z" fill="white"/>
-    <rect x="156" y="318" width="105" height="42" rx="21" fill="#FFFFFF"/>
-    <path d="M211.75 330.5L215.25 334L211.75 337.5" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    <rect x="175" y="331" width="30" height="6" rx="3" fill="#e2e8f0"/>
-    <rect x="339" y="221" width="105" height="42" rx="21" fill="#FFFFFF"/>
-    <path d="M387.75 233.5L391.25 237L387.75 240.5" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    <rect x="358" y="234" width="23" height="6" rx="3" fill="#e2e8f0"/>
+    <g opacity="0.95">
+      <ellipse cx="320" cy="210" rx="170" ry="125" fill="url(#posterGlow)"/>
+      <g className="stack-light">
+        <g filter="url(#softGlow)" className="female-symbol">
+          <circle cx="240" cy="270" r="60" fill="#ffffff" fillOpacity="0.06"/>
+          <circle cx="240" cy="270" r="60" stroke="url(#femaleRing)" strokeWidth="20"/>
+          <line x1="240" y1="340" x2="240" y2="404" stroke="url(#femaleRing)" strokeWidth="20" strokeLinecap="round"/>
+          <line x1="215" y1="378" x2="265" y2="378" stroke="url(#femaleRing)" strokeWidth="20" strokeLinecap="round"/>
+        </g>
+        <g filter="url(#softGlow)" className="male-symbol">
+          <circle cx="340" cy="200" r="60" fill="#ffffff" fillOpacity="0.06"/>
+          <circle cx="340" cy="200" r="60" stroke="url(#maleRing)" strokeWidth="20"/>
+          <g transform="rotate(-45 340 200)">
+            <line x1="400" y1="200" x2="472" y2="200" stroke="url(#maleRing)" strokeWidth="20" strokeLinecap="round"/>
+            <line x1="492" y1="200" x2="462" y2="182" stroke="url(#maleRing)" strokeWidth="16" strokeLinecap="round"/>
+            <line x1="492" y1="200" x2="462" y2="218" stroke="url(#maleRing)" strokeWidth="16" strokeLinecap="round"/>
+          </g>
+        </g>
+      </g>
+      <g className="stack-dark">
+        <g filter="url(#softGlow)" className="male-symbol">
+          <circle cx="340" cy="200" r="60" fill="#ffffff" fillOpacity="0.06"/>
+          <circle cx="340" cy="200" r="60" stroke="url(#maleRing)" strokeWidth="20"/>
+          <g transform="rotate(-45 340 200)">
+            <line x1="400" y1="200" x2="472" y2="200" stroke="url(#maleRing)" strokeWidth="20" strokeLinecap="round"/>
+            <line x1="492" y1="200" x2="462" y2="182" stroke="url(#maleRing)" strokeWidth="16" strokeLinecap="round"/>
+            <line x1="492" y1="200" x2="462" y2="218" stroke="url(#maleRing)" strokeWidth="16" strokeLinecap="round"/>
+          </g>
+        </g>
+        <g filter="url(#softGlow)" className="female-symbol">
+          <circle cx="240" cy="270" r="60" fill="#ffffff" fillOpacity="0.06"/>
+          <circle cx="240" cy="270" r="60" stroke="url(#femaleRing)" strokeWidth="20"/>
+          <line x1="240" y1="340" x2="240" y2="404" stroke="url(#femaleRing)" strokeWidth="20" strokeLinecap="round"/>
+          <line x1="215" y1="378" x2="265" y2="378" stroke="url(#femaleRing)" strokeWidth="20" strokeLinecap="round"/>
+        </g>
+      </g>
+      <circle cx="290" cy="236" r="22" fill="#ffffff" fillOpacity="0.08"/>
+    </g>
+    
   </svg>
 );

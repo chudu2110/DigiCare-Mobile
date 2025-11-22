@@ -33,8 +33,8 @@ export const LandingPage: React.FC<{ onNavigate: (target: string) => void; isLog
 
   return (
     <div className="bg-slate-50 dark:bg-slate-900 dark:text-slate-100 font-sans">
-      <LandingHeader onNavigate={onNavigate} isLoggedIn={isLoggedIn} userName={userName} isDark={isDark} onToggleDark={toggleDark} />
-      <main>
+        <LandingHeader onNavigate={onNavigate} isLoggedIn={isLoggedIn} userName={userName} isDark={isDark} onToggleDark={toggleDark} />
+        <main>
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
