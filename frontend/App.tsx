@@ -78,9 +78,7 @@ export default function App() {
     }
     if (isLoggedIn) {
       if (target === 'Khóa học') {
-        if (userRole === UserRole.PARENT) {
-          pushAppState(true, userRole, View.PARENT_DASHBOARD);
-        } else {
+        if (userRole === UserRole.STUDENT_MS || userRole === UserRole.STUDENT_HS) {
           pushAppState(true, userRole, View.STUDENT_DASHBOARD);
         }
         return;
@@ -88,8 +86,6 @@ export default function App() {
       if (target === 'Phụ huynh' || target === 'Dành cho phụ huynh') {
         if (userRole === UserRole.PARENT) {
           pushAppState(true, UserRole.PARENT, View.PARENT_DASHBOARD);
-        } else {
-          pushAppState(true, userRole, View.AUTH);
         }
         return;
       }
@@ -155,7 +151,7 @@ export default function App() {
         userRole={userRole} 
         setUserRole={handleSetUserRoleAndSwitchView} 
         setView={(view) => pushAppState(true, userRole, view)}
-        onLogoClick={() => pushAppState(false, UserRole.STUDENT_MS, View.STUDENT_DASHBOARD)}
+        onLogoClick={() => pushAppState(true, userRole, View.HOME)}
       />
       <main className="container mx-auto p-4 sm:p-6 lg:p-8">
         {renderView()}

@@ -22,9 +22,7 @@ export const LandingHeader: React.FC<{ onNavigate: (target: string) => void; isL
           </button>
           <nav className="hidden md:flex items-center space-x-8">
             <button onClick={() => scrollToId('features')} className="text-sm font-semibold text-slate-500 dark:text-slate-300 hover:text-cyan-500 hover:dark:text-cyan-300 transition-colors">Tính năng</button>
-            {userRole !== UserRole.PARENT && (
-              <button onClick={() => onNavigate('Khóa học')} className="text-sm font-semibold text-slate-500 dark:text-slate-300 hover:text-cyan-500 hover:dark:text-cyan-300 transition-colors">Khóa học</button>
-            )}
+            <button onClick={() => onNavigate('Khóa học')} className="text-sm font-semibold text-slate-500 dark:text-slate-300 hover:text-cyan-500 hover:dark:text-cyan-300 transition-colors">Khóa học</button>
             <button onClick={() => onNavigate('Phụ huynh')} className="text-sm font-semibold text-slate-500 dark:text-slate-300 hover:text-cyan-500 hover:dark:text-cyan-300 transition-colors">Phụ huynh</button>
             <button onClick={() => scrollToId('contact')} className="text-sm font-semibold text-slate-500 dark:text-slate-300 hover:text-cyan-500 hover:dark:text-cyan-300 transition-colors">Liên hệ</button>
           </nav>
