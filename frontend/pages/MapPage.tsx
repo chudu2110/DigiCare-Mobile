@@ -544,7 +544,12 @@ export const MapPage: React.FC = () => {
                           <button key={`${item.lat},${item.lon}`} onClick={() => { setSelectedPoint(null); setSearchPos([item.lat, item.lon]); if (mapRef.current) mapRef.current.setView([item.lat, item.lon], 16, { animate: true }); }} className="w-full text-left px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
                             <div className="flex items-center justify-between">
                               <h4 className="font-semibold text-slate-900 dark:text-white truncate pr-3">{item.name}</h4>
-                              <span className="text-xs text-slate-500 dark:text-slate-400 whitespace-nowrap">{item.dist.toFixed(1)} km</span>
+                              <div className="flex items-center gap-2">
+                                <span className="text-xs text-slate-500 dark:text-slate-400 whitespace-nowrap">{item.dist.toFixed(1)} km</span>
+                                <a href={`https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lon}${userPos ? `&origin=${userPos[0]},${userPos[1]}` : ''}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="inline-flex items-center justify-center w-7 h-7 rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700" aria-label="Chỉ đường">
+                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-4 h-4"><circle cx="12" cy="12" r="10" strokeWidth="2"/><path d="M16 8l-4 8-4-4 8-4z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                </a>
+                              </div>
                             </div>
                             <p className="text-sm text-slate-500 dark:text-slate-400 truncate">{item.address}</p>
                           </button>
@@ -560,7 +565,18 @@ export const MapPage: React.FC = () => {
                         <div className="divide-y divide-slate-200 dark:divide-slate-700">
                           {base.map(sp => (
                             <button key={sp.id} onClick={() => setSelectedPoint(sp)} className={`w-full text-left px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors ${selectedPoint?.id === sp.id ? 'ring-2 ring-cyan-500' : ''}`}>
-                              <h4 className="font-semibold text-slate-900 dark:text-white truncate">{sp.name}</h4>
+                              <div className="flex items-center justify-between">
+                                <h4 className="font-semibold text-slate-900 dark:text-white truncate pr-3">{sp.name}</h4>
+                                {serviceCoords[sp.id] ? (
+                                  <a href={`https://www.google.com/maps/dir/?api=1&destination=${serviceCoords[sp.id]?.lat},${serviceCoords[sp.id]?.lon}${userPos ? `&origin=${userPos[0]},${userPos[1]}` : ''}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="inline-flex items-center justify-center w-7 h-7 rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700" aria-label="Chỉ đường">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-4 h-4"><circle cx="12" cy="12" r="10" strokeWidth="2"/><path d="M16 8l-4 8-4-4 8-4z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                  </a>
+                                ) : (
+                                  <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sp.name + ' ' + sp.address + ' Việt Nam')}${userPos ? `&origin=${userPos[0]},${userPos[1]}` : ''}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="inline-flex items-center justify-center w-7 h-7 rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700" aria-label="Chỉ đường">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-4 h-4"><circle cx="12" cy="12" r="10" strokeWidth="2"/><path d="M16 8l-4 8-4-4 8-4z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                  </a>
+                                )}
+                              </div>
                               <p className="text-sm text-slate-500 dark:text-slate-400 truncate">{sp.address}</p>
                             </button>
                           ))}
