@@ -75,7 +75,8 @@ export const MAP_SERVICES: ServicePoint[] = [
     { id: 1, name: 'Phòng khám Sức khỏe Vị thành niên An Tâm', type: MapServiceType.GYNECOLOGY, address: '123 Đường Sức Khỏe, Q.1, TP.HCM', friendly: 'teen', position: { top: '25%', left: '30%' } },
     { id: 2, name: 'Trung tâm Tư vấn Tâm lý Tuổi Trẻ', type: MapServiceType.COUNSELING, address: '456 Đường Lắng Nghe, Q.3, TP.HCM', friendly: 'teen', position: { top: '40%', left: '60%' } },
     { id: 3, name: 'Phòng khám Nam khoa Hạnh Phúc', type: MapServiceType.ANDROLOGY, address: '789 Đường Tự Tin, Q.5, TP.HCM', friendly: 'all', position: { top: '65%', left: '20%' } },
-    { id: 4, name: 'Tổng đài khẩn cấp Bảo Vệ', type: MapServiceType.HOTLINE, address: 'Gọi 1800-1234', friendly: 'all', position: { top: '55%', left: '80%' } },
+    { id: 4, name: 'Tổng đài Quốc gia Bảo vệ Trẻ em', type: MapServiceType.HOTLINE, address: 'Gọi 111 (miễn phí, 24/7)', friendly: 'all', position: { top: '55%', left: '80%' } },
+    { id: 5, name: 'Đường dây nóng Bộ Y tế', type: MapServiceType.HOTLINE, address: 'Gọi 1900 9095 (Y tế, 24/7)', friendly: 'all', position: { top: '50%', left: '75%' } },
 ];
 
 // Gamification Data
