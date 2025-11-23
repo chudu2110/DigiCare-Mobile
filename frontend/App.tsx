@@ -76,11 +76,22 @@ export default function App() {
       }
       return;
     }
-    if (isLoggedIn && target === 'Khóa học') {
-      if (userRole === UserRole.PARENT) {
-        pushAppState(true, userRole, View.PARENT_DASHBOARD);
-      } else {
-        pushAppState(true, userRole, View.STUDENT_DASHBOARD);
+    if (isLoggedIn) {
+      if (target === 'Khóa học') {
+        if (userRole === UserRole.PARENT) {
+          pushAppState(true, userRole, View.PARENT_DASHBOARD);
+        } else {
+          pushAppState(true, userRole, View.STUDENT_DASHBOARD);
+        }
+        return;
+      }
+      if (target === 'Phụ huynh' || target === 'Dành cho phụ huynh') {
+        if (userRole === UserRole.PARENT) {
+          pushAppState(true, UserRole.PARENT, View.PARENT_DASHBOARD);
+        } else {
+          pushAppState(true, userRole, View.AUTH);
+        }
+        return;
       }
     }
   };
