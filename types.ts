@@ -17,6 +17,7 @@ export enum View {
   SCENARIOS,
   AUTH,
   HOME,
+  MOODTRACKER,
 }
 
 export interface CourseModule {

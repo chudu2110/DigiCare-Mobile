@@ -49,7 +49,7 @@ export const LandingHeader: React.FC<{ onNavigate: (target: string) => void; isL
                 </button>
                 {menuOpen && (
                   <div className="absolute right-0 mt-2 w-44 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-xl overflow-auto max-h-60 z-50">
-                    <button onClick={() => { onNavigate('Khóa học'); setMenuOpen(false); }} className="w-full text-left px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 hover:dark:bg-slate-700">Hồ sơ của tôi</button>
+                    <button onClick={() => { onNavigate('Hồ sơ của tôi'); setMenuOpen(false); }} className="w-full text-left px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 hover:dark:bg-slate-700">Hồ sơ của tôi</button>
                     <button onClick={() => { onLogout && onLogout(); setMenuOpen(false); }} className="w-full text-left px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 hover:dark:bg-slate-700">Đăng xuất</button>
                   </div>
                 )}

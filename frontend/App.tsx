@@ -10,6 +10,7 @@ import { ScenarioPage } from './pages/ScenarioPage';
 import { StudentDashboard } from './pages/StudentDashboard';
 import { ParentDashboard } from './pages/ParentDashboard';
 import { AdminDashboard } from './pages/AdminDashboard';
+import { MoodTrackerPage } from './pages/MoodTrackerPage';
 
 export default function App() {
   const AUTH_DISABLED = ((import.meta.env.VITE_DISABLE_AUTH ?? 'false') === 'true') || ((import.meta.env.VITE_DISABLE_AUTH ?? 'false') === '1');
@@ -106,6 +107,10 @@ export default function App() {
       }
       return;
     }
+    if (isLoggedIn && target === 'Hồ sơ của tôi') {
+      pushAppState(true, userRole, View.MOODTRACKER);
+      return;
+    }
     if (isLoggedIn && target === 'Khóa học') {
       if (userRole !== UserRole.PARENT) {
         pushAppState(true, userRole, View.STUDENT_DASHBOARD);
@@ -168,6 +173,8 @@ export default function App() {
         return <MapPage />;
       case View.QA:
         return <QAPage />;
+      case View.MOODTRACKER:
+        return <MoodTrackerPage />;
       default:
         return userRole === UserRole.ADMIN ? <AdminDashboard /> : isStudent ? <StudentDashboard userRole={userRole} /> : <ParentDashboard setView={(v) => pushAppState(true, userRole, v)} />;
     }
