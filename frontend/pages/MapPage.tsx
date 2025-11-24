@@ -260,10 +260,15 @@ export const MapPage: React.FC = () => {
           const dist = userPos ? distKm([cLat, cLon], userPos) : Number.POSITIVE_INFINITY;
           const name = el.tags?.name || el.tags?.official_name || el.tags?.short_name || '';
           return { lat: cLat, lon: cLon, dist, name, address: name, tags: el.tags };
-        }).filter(it => Number.isFinite(it.dist));
-        let matched = list.filter(it => active.some(t => matchCat(it.tags, t, it.name))).filter(it => it.dist <= RADIUS_KM).sort((a,b) => a.dist - b.dist);
+        }).filter(it => Number.isFinite(it.dist) && typeof it.lat === 'number' && typeof it.lon === 'number' && it.name && it.name.trim().length > 0);
+        let matched = list
+          .filter(it => active.some(t => matchCat(it.tags, t, it.name)))
+          .filter(it => it.dist <= RADIUS_KM)
+          .sort((a,b) => a.dist - b.dist);
         if (matched.length === 0) {
-          matched = list.filter(it => it.dist <= RADIUS_KM).sort((a,b) => a.dist - b.dist);
+          matched = list
+            .filter(it => it.dist <= RADIUS_KM)
+            .sort((a,b) => a.dist - b.dist);
         }
         setNearby(matched);
       } catch {
@@ -456,10 +461,30 @@ export const MapPage: React.FC = () => {
                     nearby.length > 0 ? (
                       <div className="divide-y divide-slate-200 dark:divide-slate-700">
                         {nearby.map(item => (
-                          <button key={`${item.lat},${item.lon}`} onClick={() => { setSelectedPoint(null); setSearchPos([item.lat, item.lon]); if (mapRef.current) mapRef.current.setView([item.lat, item.lon], 16, { animate: true }); }} className="w-full text-left px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                          <button
+                            key={`${item.lat},${item.lon}`}
+                            onClick={() => {
+                              setSelectedPoint(null);
+                              setSearchPos([item.lat, item.lon]);
+                              if (mapRef.current) mapRef.current.setView([item.lat, item.lon], 16, { animate: true });
+                            }}
+                            className="w-full text-left px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                          >
                             <div className="flex items-center justify-between">
                               <h4 className="font-semibold text-slate-900 dark:text-white truncate pr-3">{item.name}</h4>
-                              <span className="text-xs text-slate-500 dark:text-slate-400 whitespace-nowrap">{item.dist.toFixed(1)} km</span>
+                              <div className="flex items-center gap-2">
+                                <span className="text-xs text-slate-500 dark:text-slate-400 whitespace-nowrap">{item.dist.toFixed(1)} km</span>
+                                <a
+                                  href={`https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lon}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  aria-label="Dẫn đường"
+                                  onClick={(e)=>e.stopPropagation()}
+                                  className="inline-flex items-center justify-center rounded-md border border-slate-300 dark:border-slate-700 p-1 hover:bg-slate-100 dark:hover:bg-slate-700"
+                                >
+                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10" strokeWidth="2"/><path d="M16.24 7.76l-2.12 5.3-5.3 2.12 2.12-5.3 5.3-2.12z" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+                                </a>
+                              </div>
                             </div>
                             <p className="text-sm text-slate-500 dark:text-slate-400 truncate">{item.address}</p>
                           </button>
@@ -470,12 +495,46 @@ export const MapPage: React.FC = () => {
                     )
                   ) : (
                     (() => {
-                      const base = MAP_SERVICES.filter(sp => filters.includes(sp.type));
+                      const base = MAP_SERVICES
+                        .filter(sp => filters.includes(sp.type))
+                        .filter(sp => !!serviceCoords[sp.id]);
                       return (
                         <div className="divide-y divide-slate-200 dark:divide-slate-700">
                           {base.map(sp => (
-                            <button key={sp.id} onClick={() => setSelectedPoint(sp)} className={`w-full text-left px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors ${selectedPoint?.id === sp.id ? 'ring-2 ring-cyan-500' : ''}`}>
-                              <h4 className="font-semibold text-slate-900 dark:text-white truncate">{sp.name}</h4>
+                            <button
+                              key={sp.id}
+                              onClick={() => {
+                                setSelectedPoint(sp);
+                                const c = serviceCoords[sp.id];
+                                if (c) {
+                                  setSearchPos([c.lat, c.lon]);
+                                  if (mapRef.current) mapRef.current.setView([c.lat, c.lon], 16, { animate: true });
+                                }
+                              }}
+                              className={`w-full text-left px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors ${selectedPoint?.id === sp.id ? 'ring-2 ring-cyan-500' : ''}`}
+                            >
+                              <div className="flex items-center justify-between">
+                                <h4 className="font-semibold text-slate-900 dark:text-white truncate pr-3">{sp.name}</h4>
+                                {serviceCoords[sp.id] ? (
+                                  <div className="flex items-center gap-2">
+                                    {userPos ? (
+                                      <span className="text-xs text-slate-500 dark:text-slate-400 whitespace-nowrap">
+                                        {distKm(userPos, [serviceCoords[sp.id]!.lat, serviceCoords[sp.id]!.lon]).toFixed(1)} km
+                                      </span>
+                                    ) : null}
+                                    <a
+                                      href={`https://www.google.com/maps/dir/?api=1&destination=${serviceCoords[sp.id]!.lat},${serviceCoords[sp.id]!.lon}`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      aria-label="Dẫn đường"
+                                      onClick={(e)=>e.stopPropagation()}
+                                      className="inline-flex items-center justify-center rounded-md border border-slate-300 dark:border-slate-700 p-1 hover:bg-slate-100 dark:hover:bg-slate-700"
+                                    >
+                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10" strokeWidth="2"/><path d="M16.24 7.76l-2.12 5.3-5.3 2.12 2.12-5.3 5.3-2.12z" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+                                    </a>
+                                  </div>
+                                ) : null}
+                              </div>
                               <p className="text-sm text-slate-500 dark:text-slate-400 truncate">{sp.address}</p>
                             </button>
                           ))}
