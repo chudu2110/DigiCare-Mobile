@@ -12,8 +12,6 @@ export const DashboardHeader: React.FC<{
   const isStudent = userRole === UserRole.STUDENT_MS || userRole === UserRole.STUDENT_HS;
   const isParent = userRole === UserRole.PARENT;
   const isAdmin = userRole === UserRole.ADMIN;
-  const isProfile = currentView === View.MOODTRACKER;
-  const isCourse = currentView === View.STUDENT_DASHBOARD;
   
   let homeView: View;
   if(isStudent) homeView = View.STUDENT_DASHBOARD;
@@ -71,26 +69,15 @@ export const DashboardHeader: React.FC<{
                  <NavButton ref={(el) => (btnRefs.current[View.ADMIN_DASHBOARD] = el)} view={View.ADMIN_DASHBOARD} icon={ICONS.admin} label="Thống kê" />
             ) : (
                 <>
-                  {!isProfile && (
-                    <NavButton ref={(el) => (btnRefs.current[homeView] = el)} view={homeView} icon={ICONS.dashboard} label="Tổng quan" />
-                  )}
-                  {isStudent && !isProfile && (
-                    <NavButton ref={(el) => (btnRefs.current[View.SCENARIOS] = el)} view={View.SCENARIOS} icon={ICONS.scenarios} label="Tình huống" />
-                  )}
-                  {!isProfile && (
-                    <NavButton ref={(el) => (btnRefs.current[View.QA] = el)} view={View.QA} icon={ICONS.qa} label="Hỏi Đáp" />
-                  )}
-                  {!isProfile && (
-                    <NavButton ref={(el) => (btnRefs.current[View.MAP] = el)} view={View.MAP} icon={ICONS.map} label="Bản Đồ" />
-                  )}
-                  {isProfile && (
-                    <NavButton ref={(el) => (btnRefs.current[View.MOODTRACKER] = el)} view={View.MOODTRACKER} icon={ICONS.pen} label="Nhật kí cảm xúc" />
-                  )}
+                  <NavButton ref={(el) => (btnRefs.current[homeView] = el)} view={homeView} icon={ICONS.dashboard} label="Tổng quan" />
+                  {isStudent && <NavButton ref={(el) => (btnRefs.current[View.SCENARIOS] = el)} view={View.SCENARIOS} icon={ICONS.scenarios} label="Tình huống" />}
+                  <NavButton ref={(el) => (btnRefs.current[View.QA] = el)} view={View.QA} icon={ICONS.qa} label="Hỏi Đáp" />
+                  <NavButton ref={(el) => (btnRefs.current[View.MAP] = el)} view={View.MAP} icon={ICONS.map} label="Bản Đồ" />
                 </>
             )}
           </div>
           <div className="flex items-center space-x-2">
-            {!isParent && !isProfile && (
+            {!isParent && (
               <div className="bg-slate-100 dark:bg-slate-800 p-1 rounded-full flex items-center">
                 {(() => {
                   const base = [UserRole.STUDENT_MS, UserRole.STUDENT_HS];
