@@ -35,6 +35,8 @@ export const MapPage: React.FC = () => {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           const { latitude, longitude } = pos.coords;
+          setUserPos([latitude, longitude]);
+          setGeoError(null);
           if (mapRef.current) mapRef.current.setView([latitude, longitude], 15, { animate: true });
         },
         async () => {
@@ -42,6 +44,8 @@ export const MapPage: React.FC = () => {
             const res = await fetch('https://ipapi.co/json/');
             const data = await res.json();
             if (data && typeof data.latitude === 'number' && typeof data.longitude === 'number' && mapRef.current) {
+              setUserPos([data.latitude, data.longitude]);
+              setGeoError('Đang dùng định vị theo IP (độ chính xác thấp). Vui lòng mở qua localhost hoặc HTTPS để dùng GPS.');
               mapRef.current.setView([data.latitude, data.longitude], 12, { animate: true });
             }
           } catch {}
@@ -374,6 +378,7 @@ export const MapPage: React.FC = () => {
             )}
           </div>
           <button onClick={locateMe} className="px-3 py-2 rounded-lg text-sm font-bold bg-cyan-500 text-white hover:bg-cyan-600">Vị trí của tôi</button>
+          {}
         </div>
         <div className="flex flex-col lg:flex-row gap-4 h-[calc(100vh-250px)]">
           <div className="w-full lg:w-2/3 xl:w-3/4 bg-slate-100 dark:bg-slate-900 rounded-xl relative overflow-hidden">
@@ -570,14 +575,15 @@ const FitMapOnResize: React.FC = () => {
 const GeoLocate: React.FC<{ onPosition: (lat: number, lng: number) => void; onError?: (err: GeolocationPositionError) => void }> = ({ onPosition, onError }) => {
   const map = useMap();
   const centeredRef = useRef(false);
+  const bestAccRef = useRef<number>(Infinity);
   useEffect(() => {
+    map.stopLocate();
     const fallback = async () => {
       if (centeredRef.current) return;
       try {
         const res = await fetch('https://ipapi.co/json/');
         const data = await res.json();
         if (data && typeof data.latitude === 'number' && typeof data.longitude === 'number') {
-          onPosition(data.latitude, data.longitude);
           map.setView([data.latitude, data.longitude], 10, { animate: true });
           centeredRef.current = true;
         }
@@ -585,16 +591,20 @@ const GeoLocate: React.FC<{ onPosition: (lat: number, lng: number) => void; onEr
     };
     const onFound = (e: any) => {
       const { lat, lng } = e.latlng;
-      onPosition(lat, lng);
-      if (!centeredRef.current) {
-        map.setView([lat, lng], 15, { animate: true });
-        centeredRef.current = true;
+      const acc: number = typeof e.accuracy === 'number' ? e.accuracy : (typeof e.accuracyMeters === 'number' ? e.accuracyMeters : Infinity);
+      if (acc < bestAccRef.current || !centeredRef.current) {
+        bestAccRef.current = acc;
+        onPosition(lat, lng);
+        if (!centeredRef.current) {
+          map.setView([lat, lng], 15, { animate: true });
+          centeredRef.current = true;
+        }
       }
     };
     const onErr = (e: any) => { onError && onError(e); fallback(); };
     map.on('locationfound', onFound);
     map.on('locationerror', onErr);
-    map.locate({ watch: true, enableHighAccuracy: true });
+    map.locate({ watch: true, enableHighAccuracy: true, timeout: 8000, maximumAge: 0 });
     return () => { map.stopLocate(); map.off('locationfound', onFound); map.off('locationerror', onErr); };
   }, [map]);
   return null;
