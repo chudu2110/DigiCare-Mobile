@@ -168,7 +168,7 @@ export default function App() {
       case View.ADMIN_DASHBOARD:
         return <AdminDashboard />;
       case View.SCENARIOS:
-        return isStudent ? <ScenarioPage /> : <StudentDashboard userRole={userRole} />;
+        return isStudent ? <ScenarioPage userRole={userRole} /> : <StudentDashboard userRole={userRole} />;
       case View.MAP:
         return <MapPage />;
       case View.QA:

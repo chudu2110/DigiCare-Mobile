@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { LandingPage as LandingPageExternal } from './pages/LandingPage';
 import { UserRole, View, CourseModule, QASubmission, ServicePoint, MapServiceType, RoadmapItem, LeaderboardUser, Scenario, AdminStats, ModuleCompletion, UserDistribution } from './types';
+import { SCENARIOS_MS } from './data/scenarios-ms';
 import { PARENT_RESOURCES, QA_DATA, MAP_SERVICES, ICONS, LANDING_ICONS, ROADMAP_MS_DATA, ROADMAP_HS_DATA, LEADERBOARD_DATA, STUDENT_MS_COURSES, STUDENT_HS_COURSES, ADMIN_STATS_DATA, MODULE_COMPLETION_DATA, USER_DISTRIBUTION_DATA } from './constants';
 import { moderateQuestion, generateScenario } from './services/geminiService';
 
@@ -768,7 +769,7 @@ const MapPage: React.FC = () => {
         </div>
     );
 };
-const ScenarioPage: React.FC = () => {
+const ScenarioPage: React.FC<{ userRole: UserRole }> = ({ userRole }) => {
     const [scenario, setScenario] = useState<Scenario | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -779,24 +780,25 @@ const ScenarioPage: React.FC = () => {
         setError(null);
         setScenario(null);
         setSelectedOption(null);
-        const result = await generateScenario();
-        if (result) {
-            setScenario(result);
+        if (userRole === UserRole.STUDENT_MS) {
+            const s = SCENARIOS_MS[0] || null;
+            if (s) setScenario(s); else setError("Chưa có dữ liệu tình huống.");
         } else {
-            setError("Không thể tạo tình huống. Vui lòng thử lại sau.");
+            const result = await generateScenario();
+            if (result) { setScenario(result); } else { setError("Không thể tạo tình huống. Vui lòng thử lại sau."); }
         }
         setLoading(false);
     };
 
     useEffect(() => {
         handleGenerateScenario();
-    }, []);
+    }, [userRole]);
 
     return (
         <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
                 <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-2">Tình Huống Tương Tác</h2>
-                <p className="text-lg text-slate-500 dark:text-slate-300">Thực hành kỹ năng qua các tình huống thực tế do AI tạo ra.</p>
+                <p className="text-lg text-slate-500 dark:text-slate-300">Thực hành kỹ năng qua các tình huống phù hợp độ tuổi.</p>
             </div>
             <div className="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl shadow-slate-900/5 dark:shadow-[0_0_18px_rgba(15,23,42,0.35)] border border-slate-200 dark:border-slate-700 min-h-[400px] flex flex-col justify-center items-center">
                 {loading && <div className="text-center text-slate-500 dark:text-slate-400">Đang tạo tình huống mới...</div>}
@@ -1696,7 +1698,7 @@ const MainApp: React.FC<{
       case View.ADMIN_DASHBOARD:
         return <AdminDashboard />;
       case View.SCENARIOS:
-        return isStudent ? <ScenarioPage /> : <StudentDashboard userRole={userRole} />; // Fallback for safety
+        return isStudent ? <ScenarioPage userRole={userRole} /> : <StudentDashboard userRole={userRole} />;
       case View.MAP:
         return <MapPage />;
       case View.QA:

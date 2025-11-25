@@ -625,22 +625,85 @@ const FitMapOnResize: React.FC = () => {
 const GeoLocate: React.FC<{ onPosition: (lat: number, lng: number) => void; onError?: (err: GeolocationPositionError) => void }> = ({ onPosition, onError }) => {
   const map = useMap();
   const centeredRef = useRef(false);
+  const getCached = () => {
+    try {
+      const raw = localStorage.getItem('user_location');
+      if (!raw) return null;
+      const obj = JSON.parse(raw);
+      if (!obj || typeof obj.lat !== 'number' || typeof obj.lon !== 'number' || typeof obj.ts !== 'number') return null;
+      if (Date.now() - obj.ts > 24 * 60 * 60 * 1000) return null;
+      return [obj.lat, obj.lon] as [number, number];
+    } catch { return null; }
+  };
+  const setCached = (lat: number, lon: number) => {
+    try { localStorage.setItem('user_location', JSON.stringify({ lat, lon, ts: Date.now() })); } catch {}
+  };
   useEffect(() => {
     const fallback = async () => {
       if (centeredRef.current) return;
-      try {
-        const res = await fetch('https://ipapi.co/json/');
-        const data = await res.json();
-        if (data && typeof data.latitude === 'number' && typeof data.longitude === 'number') {
-          onPosition(data.latitude, data.longitude);
-          map.setView([data.latitude, data.longitude], 10, { animate: true });
+      const cached = getCached();
+      if (cached) {
+        const [lat, lon] = cached;
+        onPosition(lat, lon);
+        map.setView([lat, lon], 12, { animate: true });
+        centeredRef.current = true;
+        return;
+      }
+      if ('geolocation' in navigator) {
+        const p = await new Promise<GeolocationPosition | null>((resolve) => {
+          navigator.geolocation.getCurrentPosition(
+            pos => resolve(pos),
+            () => resolve(null),
+            { enableHighAccuracy: false, timeout: 15000, maximumAge: 600000 }
+          );
+        });
+        if (p) {
+          const { latitude, longitude } = p.coords;
+          onPosition(latitude, longitude);
+          setCached(latitude, longitude);
+          map.setView([latitude, longitude], 12, { animate: true });
           centeredRef.current = true;
+          return;
         }
-      } catch {}
+      }
+      const providers = [
+        async () => {
+          const r = await fetch('https://ipapi.co/json/');
+          const d = await r.json();
+          if (d && typeof d.latitude === 'number' && typeof d.longitude === 'number') return [d.latitude, d.longitude] as [number, number];
+          return null;
+        },
+        async () => {
+          const r = await fetch('https://ipwho.is/');
+          const d = await r.json();
+          if (d && typeof d.latitude === 'number' && typeof d.longitude === 'number') return [d.latitude, d.longitude] as [number, number];
+          return null;
+        },
+        async () => {
+          const r = await fetch('https://ip-api.com/json');
+          const d = await r.json();
+          if (d && typeof d.lat === 'number' && typeof d.lon === 'number') return [d.lat, d.lon] as [number, number];
+          return null;
+        }
+      ];
+      for (const fn of providers) {
+        try {
+          const res = await fn();
+          if (res) {
+            const [lat, lon] = res;
+            onPosition(lat, lon);
+            setCached(lat, lon);
+            map.setView([lat, lon], 10, { animate: true });
+            centeredRef.current = true;
+            break;
+          }
+        } catch {}
+      }
     };
     const onFound = (e: any) => {
       const { lat, lng } = e.latlng;
       onPosition(lat, lng);
+      setCached(lat, lng);
       if (!centeredRef.current) {
         map.setView([lat, lng], 15, { animate: true });
         centeredRef.current = true;
@@ -665,16 +728,36 @@ const LocateButton: React.FC<{ userPos: [number, number] | null }> = ({ userPos 
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const { latitude, longitude } = pos.coords;
+        try { localStorage.setItem('user_location', JSON.stringify({ lat: latitude, lon: longitude, ts: Date.now() })); } catch {}
         map.setView([latitude, longitude], 15, { animate: true });
       },
       async () => {
-        try {
-          const res = await fetch('https://ipapi.co/json/');
-          const data = await res.json();
-          if (data && typeof data.latitude === 'number' && typeof data.longitude === 'number') {
-            map.setView([data.latitude, data.longitude], 12, { animate: true });
-          }
-        } catch {}
+        const raw = localStorage.getItem('user_location');
+        if (raw) {
+          try {
+            const obj = JSON.parse(raw);
+            if (obj && typeof obj.lat === 'number' && typeof obj.lon === 'number') {
+              map.setView([obj.lat, obj.lon], 12, { animate: true });
+              return;
+            }
+          } catch {}
+        }
+        const providers = [
+          async () => { const r = await fetch('https://ipapi.co/json/'); const d = await r.json(); if (d && typeof d.latitude === 'number' && typeof d.longitude === 'number') return [d.latitude, d.longitude] as [number, number]; return null; },
+          async () => { const r = await fetch('https://ipwho.is/'); const d = await r.json(); if (d && typeof d.latitude === 'number' && typeof d.longitude === 'number') return [d.latitude, d.longitude] as [number, number]; return null; },
+          async () => { const r = await fetch('https://ip-api.com/json'); const d = await r.json(); if (d && typeof d.lat === 'number' && typeof d.lon === 'number') return [d.lat, d.lon] as [number, number]; return null; }
+        ];
+        for (const fn of providers) {
+          try {
+            const res = await fn();
+            if (res) {
+              const [lat, lon] = res;
+              try { localStorage.setItem('user_location', JSON.stringify({ lat, lon, ts: Date.now() })); } catch {}
+              map.setView([lat, lon], 12, { animate: true });
+              break;
+            }
+          } catch {}
+        }
       },
       { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
     );
