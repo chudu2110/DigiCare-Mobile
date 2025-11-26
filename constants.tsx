@@ -92,13 +92,13 @@ export const MAP_SERVICES: ServicePoint[] = [
 
 // Gamification Data
 export const ROADMAP_MS_DATA: RoadmapItem[] = [
-    { id: 1, type: 'lesson', title: 'Bài 1: Cơ thể mình là duy nhất', status: 'completed', position: { top: '5%', left: '60%' } },
-    { id: 2, type: 'lesson', title: 'Bài 2: Những thay đổi diệu kỳ', status: 'completed', position: { top: '18%', left: '35%' } },
-    { id: 3, type: 'lesson', title: 'Bài 3: Cảm xúc tuổi mới lớn', status: 'current', position: { top: '30%', left: '70%' } },
-    { id: 4, type: 'badge', title: 'Huy hiệu "Hiểu Bản Thân"', status: 'locked', position: { top: '45%', left: '50%' } },
-    { id: 5, type: 'lesson', title: 'Bài 5: Tình bạn khác giới', status: 'locked', position: { top: '60%', left: '30%' } },
-    { id: 6, type: 'lesson', title: 'Bài 6: Tôn trọng sự khác biệt', status: 'locked', position: { top: '75%', left: '65%' } },
-    { id: 7, type: 'lesson', title: 'Bài 7: Nói "Không" đúng cách', status: 'locked', position: { top: '88%', left: '40%' } },
+    { id: 1, type: 'lesson', title: 'Bài 1: Tuổi dậy thì bé gái mong muốn khám phá cơ thể', status: 'completed', position: { top: '5%', left: '60%' } },
+    { id: 2, type: 'lesson', title: 'Bài 2: Tuổi dậy thì bé trai mong muốn khám phá cơ thể', status: 'completed', position: { top: '18%', left: '35%' } },
+    { id: 3, type: 'lesson', title: 'Bài 3: Hành vi quấy rối xâm hại', status: 'current', position: { top: '30%', left: '70%' } },
+    { id: 4, type: 'lesson', title: 'Bài 4: Em bé được sinh ra thế nào', status: 'current', position: { top: '45%', left: '50%' } },
+    { id: 5, type: 'lesson', title: 'Bài 5: Bị xâm hại trong gia đình', status: 'current', position: { top: '60%', left: '30%' } },
+    { id: 6, type: 'lesson', title: 'Bài 6: Lệch lạc giới tính của trẻ', status: 'current', position: { top: '75%', left: '65%' } },
+    { id: 7, type: 'lesson', title: 'Bài 7: Dị tính', status: 'current', position: { top: '88%', left: '40%' } },
     { id: 8, type: 'badge', title: 'Huy hiệu "Tôn Trọng"', status: 'locked', position: { top: '100%', left: '55%' } },
 ];
 

@@ -98,11 +98,11 @@ export const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole })
   const moduleIconFromTitle = (title: string, progress: number, uid: string|number) => {
     const t = title.toLowerCase();
     const tone = toneForModule(progress);
-    if (t.includes('giới tính') || t.includes('cơ thể') || t.includes('sinh học')) return <MedalIcon glyph="dna" tone={tone} uid={uid}/>;
-    if (t.includes('dậy thì') || t.includes('thay đổi')) return <MedalIcon glyph="hormone" tone={tone} uid={uid}/>;
-    if (t.includes('tôn trọng') || t.includes('quan hệ') || t.includes('tình bạn')) return <MedalIcon glyph="gender" tone={tone} uid={uid}/>;
-    if (t.includes('tránh thai') || t.includes('tình dục')) return <MedalIcon glyph="contraception" tone={tone} uid={uid}/>;
-    if (t.includes('xâm hại') || t.includes('an toàn')) return <MedalIcon glyph="shield" tone={tone} uid={uid}/>;
+    if (t.includes('cơ thể') || t.includes('giới tính')) return <MedalIcon glyph="dna" tone={tone} uid={uid}/>;
+    if (t.includes('dậy thì') || t.includes('bé gái') || t.includes('bé trai')) return <MedalIcon glyph="hormone" tone={tone} uid={uid}/>;
+    if (t.includes('em bé') || t.includes('sinh ra')) return <MedalIcon glyph="spermEgg" tone={tone} uid={uid}/>;
+    if (t.includes('xâm hại') || t.includes('quấy rối') || t.includes('an toàn') || t.includes('gia đình')) return <MedalIcon glyph="shield" tone={tone} uid={uid}/>;
+    if (t.includes('dị tính') || t.includes('lệch lạc') || t.includes('quan hệ')) return <MedalIcon glyph="gender" tone={tone} uid={uid}/>;
     return <MedalIcon glyph="cell" tone={tone} uid={uid}/>;
   };
 
@@ -163,9 +163,7 @@ export const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole })
     const buttonClasses = `relative rounded-full cursor-pointer transition-transform duration-200 ease-out drop-shadow-xl group-hover:-translate-y-1 active:translate-y-0.5`;
     const iconFor = () => {
       if (isBadge) return item.status === 'locked' ? ICONS.lock : MEDAL_ICONS[(item.id - 1) % MEDAL_ICONS.length];
-      if (isCurrent) return '📘';
-      const icons = ['⭐', '🏋️', '⭐'];
-      return icons[(item.id - 1) % icons.length];
+      return '';
     };
 
     return (
@@ -182,7 +180,7 @@ export const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole })
         <button className={`${buttonClasses} ${size}`} onClick={() => setSelectedLesson(item)}>
           <span className={`absolute inset-0 rounded-full translate-y-2 bg-black/10 blur-[2px] opacity-40`}></span>
           <span className={`absolute inset-0 rounded-full ring-4 bg-gradient-to-br ${style.base} ${style.ring} flex items-center justify-center shadow-2xl ${isCurrent ? 'animate-glowing' : ''}`}>
-            <span className={`text-3xl ${style.iconColor}`}>{iconFor()}</span>
+            {isBadge ? <span className={`text-3xl ${style.iconColor}`}>{iconFor()}</span> : moduleIconFromTitle(item.title, isCurrent ? lessonProgress : 0, item.id)}
           </span>
         </button>
         <p className={`mt-3 w-40 text-center text-sm font-semibold text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity`}>{item.title}</p>
@@ -330,6 +328,21 @@ export const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole })
       return true;
     });
     const label = (s: RoadmapItem['status']) => s === 'current' ? 'Đang học' : s === 'completed' ? 'Đã hoàn thành' : 'Chưa mở';
+    const emojiForLesson = (it: RoadmapItem) => {
+      if (it.type === 'badge') return '🤝';
+      const map: Record<number, string> = { 1:'👧', 2:'👦', 3:'🛡️', 4:'🍼', 5:'🚨', 6:'🧠', 7:'❤️' };
+      const m = map[it.id];
+      if (m) return m;
+      const t = it.title.toLowerCase();
+      if (t.includes('bé gái')) return '👧';
+      if (t.includes('bé trai')) return '👦';
+      if (t.includes('xâm hại') || t.includes('quấy rối')) return '🛡️';
+      if (t.includes('em bé') || t.includes('sinh ra')) return '🍼';
+      if (t.includes('gia đình')) return '🏠';
+      if (t.includes('lệch lạc')) return '⚠️';
+      if (t.includes('dị tính')) return '❤️';
+      return '📘';
+    };
     const lessonEmoji = (title: string) => {
       const t = title.toLowerCase();
       if ((t.includes('nói') && t.includes('không')) || t.includes('từ chối') || t.includes('say no') || t.includes('no')) return '🚫';
@@ -370,14 +383,16 @@ export const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole })
               <div key={it.id} className="p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 flex items_center justify_center text-lg">{lessonEmoji(it.title)}</div>
+                    <div className="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-lg">
+                      {emojiForLesson(it)}
+                    </div>
                     <div>
                       <p className="text-sm text-slate-500 dark:text-slate-400">{label(it.status)}</p>
                       <h4 className="font-bold text-slate-900 dark:text-white">{it.title}</h4>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <button onClick={()=>{ if(it.status!=='locked'){ setSelectedLesson(it); setPlaying(true); } }} className={it.status==='locked'?btnPrimaryDisabled:btnPrimaryEnabled}>{primaryLabel}</button>
+                    <button onClick={()=>{ setSelectedLesson(it); setPlaying(true); }} className={btnPrimaryEnabled}>{primaryLabel}</button>
                     <button onClick={()=>toggle(it.id)} className={btnOutline}>{isOpen?'Đóng':'Chi tiết'}</button>
                   </div>
                 </div>
@@ -385,10 +400,10 @@ export const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole })
                   <div className="mt-4 space-y-3">
                     {[1,2,3].map((n) => (
                       <div key={n} className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
-                        <div className="w-8 h-8 rounded-full bg_white dark:bg-slate-900 flex items-center justify-center text-cyan-600">{n}</div>
+                        <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center text-cyan-600">{n}</div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 truncate">Nội dung {n}: {it.title.replace('Bài','Phần')}</p>
-                          <p className="text-xs text-slate-5 00 dark:text-slate-400">3–6 phút • Câu hỏi tương tác</p>
+                          <p className="text-xs text-slate-500 dark:text-slate-400">3–6 phút • Câu hỏi tương tác</p>
                         </div>
                         <button className="px-2 py-1 text-xs rounded-md bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200">Xem</button>
                       </div>
