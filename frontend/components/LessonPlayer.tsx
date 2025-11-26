@@ -8,6 +8,7 @@ type LessonSection = {
   kind: 'video' | 'reading' | 'quiz' | 'foundation' | 'quick';
   durationLabel: string;
   src?: string;
+  readingId?: string;
 };
 
 export const LessonPlayer: React.FC<{
@@ -123,9 +124,21 @@ export const LessonPlayer: React.FC<{
   }, [sections]);
 
   useEffect(() => {
+    const html = document.documentElement as HTMLElement;
+    const body = document.body as HTMLElement;
+    const prevHtml = html.style.overflow;
+    const prevBody = body.style.overflow;
+    html.style.overflow = 'hidden';
+    body.style.overflow = 'hidden';
+    return () => { html.style.overflow = prevHtml; body.style.overflow = prevBody; };
+  }, []);
+
+  useEffect(() => {
     if (!active) return;
     if (active.kind !== 'foundation' && active.kind !== 'quick') setSubView(null);
   }, [activeIndex]);
+
+  
 
   useEffect(() => {
     if (!subView) return;
@@ -366,7 +379,7 @@ export const LessonPlayer: React.FC<{
                 key={s.id}
                 onClick={() => { 
                   setActiveIndex(i); 
-                  if (s.kind==='foundation') setSubView({ type: 'foundation', id: READING_TOPICS[0]?.id });
+                  if (s.kind==='foundation') setSubView({ type: 'foundation', id: s.readingId || READING_TOPICS[0]?.id });
                   else if (s.kind==='quick') setSubView({ type: 'quick' });
                   else setSubView(null);
                 }}
@@ -463,17 +476,17 @@ export const LessonPlayer: React.FC<{
                   return (
                     <div className="max-w-4xl mx-auto">
                       <div className="mb-6">
-                        <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">{topic.title}</h2>
-                        <p className="text-slate-600 dark:text-slate-300">Bài đọc tương tác.</p>
+                        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-1">{topic.title}</h2>
+                        <p className="text-sm text-slate-600 dark:text-slate-300">Bài đọc tương tác.</p>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div className="md:col-span-2 space-y-6">
                           {topic.blocks.map((b, i) => (
                             <section key={i} className="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700">
-                              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">{b.heading}</h3>
-                              <p className="text-slate-600 dark:text-slate-300">{b.text}</p>
+                              <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2">{b.heading}</h3>
+                              <p className="text-sm leading-relaxed whitespace-pre-line text-slate-600 dark:text-slate-300">{b.text}</p>
                               {b.bullets && (
-                                <ul className="mt-3 list-disc list-inside text-slate-700 dark:text-slate-200">
+                                <ul className="mt-3 list-disc list-inside text-sm leading-relaxed text-slate-700 dark:text-slate-200">
                                   {b.bullets.map((it, j) => (<li key={j}>{it}</li>))}
                                 </ul>
                               )}
@@ -513,8 +526,8 @@ export const LessonPlayer: React.FC<{
               </div>
             )}
             {subView && (
-              <div className="absolute inset-0 z-[30] bg-white dark:bg-slate-900">
-                <div className="p-4 sm:p-6">
+              <div className="absolute inset-0 z-[30] bg-white dark:bg-slate-900 overflow-hidden">
+                <div className="p-4 sm:p-6 pb-10 pr-2 custom-scroll max-h-[80vh] overflow-y-auto overscroll-y-contain scroll-smooth">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">{subView.type === 'foundation' ? 'Chi tiết kiến thức' : 'Gợi ý câu hỏi nhanh'}</h3>
                     <button onClick={()=>setSubView(null)} className="px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Đóng</button>
@@ -527,10 +540,10 @@ export const LessonPlayer: React.FC<{
                           <div className="lg:col-span-2 space-y-6">
                             {topic.blocks.map((b, i) => (
                               <div key={i} className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5">
-                                <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-2">{b.heading}</h4>
-                                <p className="text-slate-600 dark:text-slate-300">{b.text}</p>
+                                <h4 className="text-base font-bold text-slate-900 dark:text-white mb-2">{b.heading}</h4>
+                                <p className="text-sm leading-relaxed whitespace-pre-line text-slate-600 dark:text-slate-300">{b.text}</p>
                                 {b.bullets && (
-                                  <ul className="mt-2 list-disc list-inside text-slate-700 dark:text-slate-200">
+                                  <ul className="mt-2 list-disc list-inside text-sm leading-relaxed text-slate-700 dark:text-slate-200">
                                     {b.bullets.map((it, j) => (<li key={j}>{it}</li>))}
                                   </ul>
                                 )}

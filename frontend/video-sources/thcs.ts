@@ -11,7 +11,7 @@ export const getThcsSections = (lessonId: number, title: string) => {
   const src = VIDEO_MAP[lessonId] || 'https://www.youtube.com/watch?v=TFIozvEqGqY&list=PLwxCHpnspQtM1Yk7QHRdLgF4uiorHIMjm';
   return [
     { id: `s1-${lessonId}`, title: 'Giới thiệu', kind: 'video', durationLabel: '2 phút', src },
-    { id: `s2-${lessonId}`, title: 'Kiến thức nền tảng', kind: 'foundation', durationLabel: '6 phút' },
+    { id: `s2-${lessonId}`, title: 'Kiến thức nền tảng', kind: 'foundation', durationLabel: '6 phút', readingId: lessonId===1 ? 'thcs-bai1' : undefined },
     { id: `s3-${lessonId}`, title: 'Câu hỏi nhanh', kind: 'quick', durationLabel: '4 phút' },
   ] as const;
 };
