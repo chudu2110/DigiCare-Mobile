@@ -99,7 +99,7 @@ export const LandingPage: React.FC<{ onNavigate: (target: string) => void; isLog
         <section className="py-20 bg-white dark:bg-slate-900">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto scroll-animate">
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Tại sao chọn SafeLearn?</h2>
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Tại sao chọn DigiCare?</h2>
               <p className="mt-4 text-lg text-slate-500 dark:text-slate-400">Chúng tôi mang đến một môi trường học tập hiện đại, an toàn và hiệu quả, giúp bạn tự tin làm chủ kiến thức.</p>
             </div>
             <div className="mt-12 grid md:grid-cols-3 gap-8">
@@ -152,12 +152,12 @@ export const LandingPage: React.FC<{ onNavigate: (target: string) => void; isLog
             </div>
             <TestimonialsCarousel
               items={[
-                { quote: 'Nhờ SafeLearn, em không còn ngại ngùng khi nói về những thay đổi của cơ thể mình. Các bài học rất dễ hiểu và không hề khô khan như em nghĩ.', author: '- An Nhiên, Học sinh lớp 8' },
+                { quote: 'Nhờ DigiCare, em không còn ngại ngùng khi nói về những thay đổi của cơ thể mình. Các bài học rất dễ hiểu và không hề khô khan như em nghĩ.', author: '- An Nhiên, Học sinh lớp 8' },
                 { quote: 'Ứng dụng này là một công cụ tuyệt vời. Tôi đã biết cách trò chuyện với con trai về các vấn đề nhạy cảm một cách cởi mở và khoa học hơn.', author: '- Anh Minh, Phụ huynh' },
                 { quote: 'Các tình huống mô phỏng giúp em biết cách ứng xử phù hợp. Em thấy tự tin hơn rất nhiều.', author: '- Tuấn Khoa, Học sinh lớp 9' },
-                { quote: 'Nội dung có tính khoa học, dễ hiểu và phù hợp với lứa tuổi. Tôi yên tâm khi con học trên SafeLearn.', author: '- Chị Hà, Phụ huynh' },
+                { quote: 'Nội dung có tính khoa học, dễ hiểu và phù hợp với lứa tuổi. Tôi yên tâm khi con học trên DigiCare.', author: '- Chị Hà, Phụ huynh' },
                 { quote: 'Phần hỏi đáp ẩn danh thật sự hữu ích, em có thể hỏi những điều khó nói một cách thoải mái.', author: '- Minh Châu, Học sinh lớp 10' },
-                { quote: 'SafeLearn giúp tôi có thêm kiến thức để đồng hành cùng con một cách đúng đắn.', author: '- Anh Phúc, Phụ huynh' }
+                { quote: 'DigiCare giúp tôi có thêm kiến thức để đồng hành cùng con một cách đúng đắn.', author: '- Anh Phúc, Phụ huynh' }
               ]}
               intervalMs={3500}
             />
@@ -170,7 +170,7 @@ export const LandingPage: React.FC<{ onNavigate: (target: string) => void; isLog
               <div className="absolute -top-10 -left-10 w-32 h-32 bg-white/10 rounded-full"></div>
               <div className="absolute -bottom-16 -right-5 w-48 h-48 bg-white/10 rounded-full"></div>
               <h2 className="text-4xl font-extrabold relative">Sẵn sàng bắt đầu hành trình của bạn?</h2>
-              <p className="mt-4 max-w-2xl mx-auto opacity-80 relative">Trang bị kiến thức, xây dựng sự tự tin và vững bước vào tương lai cùng SafeLearn.</p>
+              <p className="mt-4 max-w-2xl mx-auto opacity-80 relative">Trang bị kiến thức, xây dựng sự tự tin và vững bước vào tương lai cùng DigiCare.</p>
               <button onClick={() => onNavigate('Bắt đầu học')} className="mt-8 flex items-center justify-center mx-auto text-base font-bold text-cyan-600 bg-white dark:text-white dark:bg-gradient-to-r dark:from-cyan-500 dark:to-accent-purple px-8 py-4 rounded-xl hover:bg-slate-200 dark:hover:from-cyan-400 dark:hover:to-accent-purple/90 transition-colors shadow-2xl">
                 Bắt đầu học ngay {LANDING_ICONS.arrow}
               </button>
@@ -205,7 +205,7 @@ export const LandingPage: React.FC<{ onNavigate: (target: string) => void; isLog
       </main>
       <footer className="border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-slate-500 dark:text-slate-400 text-sm">
-          <p>&copy; {new Date().getFullYear()} SafeLearn. Mọi quyền được bảo lưu.</p>
+          <p>&copy; {new Date().getFullYear()} DigiCare. Mọi quyền được bảo lưu.</p>
           <p className="mt-2">Một sản phẩm vì cộng đồng, giúp thế hệ trẻ Việt Nam tự tin và an toàn hơn.</p>
         </div>
       </footer>

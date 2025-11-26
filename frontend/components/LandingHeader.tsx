@@ -17,7 +17,7 @@ export const LandingHeader: React.FC<{ onNavigate: (target: string) => void; isL
         <div className="flex items-center justify-between h-16">
           <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center space-x-2 rounded-full" aria-label="Về Trang chủ">
             {LANDING_ICONS.logo}
-            <span className="font-bold text-xl text-slate-900 dark:text-white">SafeLearn</span>
+            <span className="font-bold text-xl text-slate-900 dark:text-white">DigiCare</span>
           </button>
           <nav className="hidden md:flex items-center space-x-8">
             <button onClick={() => scrollToId('features')} className="text-sm font-semibold text-slate-500 dark:text-slate-300 hover:text-cyan-500 hover:dark:text-cyan-300 transition-colors">Tính năng</button>

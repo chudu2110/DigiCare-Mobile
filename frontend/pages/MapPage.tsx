@@ -268,6 +268,13 @@ export const MapPage: React.FC = () => {
     const h = Math.sin(dLat/2)**2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon/2)**2;
     return 2 * R * Math.asin(Math.sqrt(h));
   };
+  const gmapsDir = (destLat: number, destLon: number) => {
+    const base = 'https://www.google.com/maps/dir/?api=1';
+    if (userPos) {
+      return `${base}&origin=${userPos[0]},${userPos[1]}&destination=${destLat},${destLon}&travelmode=driving`;
+    }
+    return `${base}&destination=${destLat},${destLon}&travelmode=driving`;
+  };
   const matchCat = (tags: any, type: MapServiceType, name: string) => {
     const n = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     const t = Object.fromEntries(Object.entries(tags || {}).map(([k,v]) => [k, typeof v === 'string' ? n(v) : v]));
@@ -534,7 +541,7 @@ export const MapPage: React.FC = () => {
                               <div className="flex items-center gap-2">
                                 <span className="text-xs text-slate-500 dark:text-slate-400 whitespace-nowrap">{item.dist.toFixed(1)} km</span>
                                 <a
-                                  href={`https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lon}`}
+                                  href={gmapsDir(item.lat, item.lon)}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   aria-label="Dẫn đường"
@@ -582,7 +589,7 @@ export const MapPage: React.FC = () => {
                                       </span>
                                     ) : null}
                                     <a
-                                      href={`https://www.google.com/maps/dir/?api=1&destination=${serviceCoords[sp.id]!.lat},${serviceCoords[sp.id]!.lon}`}
+                                      href={gmapsDir(serviceCoords[sp.id]!.lat, serviceCoords[sp.id]!.lon)}
                                       target="_blank"
                                       rel="noopener noreferrer"
                                       aria-label="Dẫn đường"

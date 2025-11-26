@@ -55,7 +55,7 @@ const SplashScreen: React.FC = () => (
           <div className="w-10 h-10 flex items-center justify-center rounded-full bg-cyan-500 text-white">{LANDING_ICONS.logo}</div>
         </div>
       </div>
-      <p className="mt-6 text-2xl font-extrabold text-slate-900 dark:text-white">SafeLearn</p>
+      <p className="mt-6 text-2xl font-extrabold text-slate-900 dark:text-white">DigiCare</p>
       <p className="mt-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-accent-purple dark:from-cyan-400 dark:to-accent-purple">Giáo dục an toàn, khoa học & thân thiện</p>
       <div className="mt-6 w-48 h-2 bg-slate-200 dark:bg-white/10 rounded-full mx-auto overflow-hidden relative">
         <div className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-cyan-500 to-accent-purple rounded-full dark:shadow-[0_0_18px_rgba(6,182,212,0.45)]" style={{ animation: 'loadingSlide 1.4s ease-in-out infinite' }}></div>
@@ -181,7 +181,7 @@ const LandingHeader: React.FC<{ onNavigate: (target: string) => void }> = ({ onN
       <div className="flex items-center justify-between h-16">
         <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center space-x-2 rounded-full" aria-label="Về Trang chủ">
           {LANDING_ICONS.logo}
-          <span className="font-bold text-xl text-slate-900">SafeLearn</span>
+          <span className="font-bold text-xl text-slate-900">DigiCare</span>
         </button>
         <nav className="hidden md:flex items-center space-x-8">
           <button onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })} className="text-sm font-semibold text-slate-500 hover:text-cyan-500 transition-colors">Tính năng</button>
@@ -279,7 +279,7 @@ const LandingPage: React.FC<{ onNavigate: (target: string) => void }> = ({ onNav
             <section className="py-20 bg-white">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center max-w-3xl mx-auto scroll-animate">
-                        <h2 className="text-3xl font-bold text-slate-900">Tại sao chọn SafeLearn?</h2>
+                        <h2 className="text-3xl font-bold text-slate-900">Tại sao chọn DigiCare?</h2>
                         <p className="mt-4 text-lg text-slate-500">Chúng tôi mang đến một môi trường học tập hiện đại, an toàn và hiệu quả, giúp bạn tự tin làm chủ kiến thức.</p>
                     </div>
                     <div className="mt-12 grid md:grid-cols-3 gap-8">
@@ -363,7 +363,7 @@ const LandingPage: React.FC<{ onNavigate: (target: string) => void }> = ({ onNav
                         <div className="bg-white p-8 rounded-xl border border-slate-200 shadow-lg shadow-slate-900/5 scroll-animate transition-transform duration-300 filter hover:brightness-105 hover:-translate-y-1 hover:shadow-xl hover:border-cyan-200">
                             <div className="flex items-start">
                                 {LANDING_ICONS.quotes}
-                                <p className="ml-4 text-slate-500 italic">"Nhờ SafeLearn, em không còn ngại ngùng khi nói về những thay đổi của cơ thể mình. Các bài học rất dễ hiểu và không hề khô khan như em nghĩ."</p>
+                                <p className="ml-4 text-slate-500 italic">"Nhờ DigiCare, em không còn ngại ngùng khi nói về những thay đổi của cơ thể mình. Các bài học rất dễ hiểu và không hề khô khan như em nghĩ."</p>
                             </div>
                             <p className="text-right mt-4 font-bold text-slate-900">- An Nhiên, Học sinh lớp 8</p>
                         </div>
@@ -384,7 +384,7 @@ const LandingPage: React.FC<{ onNavigate: (target: string) => void }> = ({ onNav
                         <div className="absolute -top-10 -left-10 w-32 h-32 bg-white/10 rounded-full"></div>
                         <div className="absolute -bottom-16 -right-5 w-48 h-48 bg-white/10 rounded-full"></div>
                         <h2 className="text-4xl font-extrabold relative">Sẵn sàng bắt đầu hành trình của bạn?</h2>
-                        <p className="mt-4 max-w-2xl mx-auto opacity-80 relative">Trang bị kiến thức, xây dựng sự tự tin và vững bước vào tương lai cùng SafeLearn.</p>
+                        <p className="mt-4 max-w-2xl mx-auto opacity-80 relative">Trang bị kiến thức, xây dựng sự tự tin và vững bước vào tương lai cùng DigiCare.</p>
                         <button onClick={() => onNavigate('Bắt đầu học')} className="mt-8 flex items-center justify-center mx-auto text-base font-bold text-cyan-600 bg-white px-8 py-4 rounded-lg hover:bg-slate-200 transition-colors shadow-2xl">
                             Bắt đầu học ngay {LANDING_ICONS.arrow}
                         </button>
@@ -403,7 +403,7 @@ const LandingPage: React.FC<{ onNavigate: (target: string) => void }> = ({ onNav
                             <h3 className="text-xl font-bold text-slate-900">Thông tin</h3>
                                 <p className="mt-2 text-slate-600">Chúng tôi sẵn sàng hỗ trợ và lắng nghe bạn.</p>
                             <div className="mt-4 space-y-3 text-slate-700">
-                                <p><span className="font-semibold">Email:</span> support@safelearn.vn</p>
+                                <p><span className="font-semibold">Email:</span> support@digicare.vn</p>
                                 <p><span className="font-semibold">Hotline:</span> 024-1234-5678</p>
                                 <p><span className="font-semibold">Thời gian:</span> 08:00–17:30 (T2–T6)</p>
                                 <p><span className="font-semibold">Địa chỉ:</span> Km 2, Quốc lộ 2B, xã Định Trung, thành phố Vĩnh Yên, tỉnh Vĩnh Phúc</p>

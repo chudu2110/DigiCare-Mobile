@@ -61,7 +61,7 @@ export const DashboardHeader: React.FC<{
         <div className="relative flex items-center justify-between h-14 bg-white/70 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl p-2 shadow-lg shadow-slate-900/5 dark:shadow-[0_0_18px_rgba(15,23,42,0.35)] border border-slate-200 dark:border-slate-700">
           <button onClick={onLogoClick} aria-label="Về Trang chủ" className="flex items-center space-x-2 rounded-full">
             {LANDING_ICONS.logo}
-            <span className="text-xl font-bold text-slate-900 dark:text-white">SafeLearn</span>
+            <span className="text-xl font-bold text-slate-900 dark:text-white">DigiCare</span>
           </button>
           <div ref={containerRef} className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center space-x-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-full antialiased overflow-hidden">
             <div

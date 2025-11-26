@@ -14,7 +14,7 @@ export const SplashScreen: React.FC = () => (
           <div className="w-10 h-10 flex items-center justify-center rounded-full bg-cyan-500 text-white">{LANDING_ICONS.logo}</div>
         </div>
       </div>
-      <p className="mt-6 text-2xl font-extrabold text-slate-900">SafeLearn</p>
+      <p className="mt-6 text-2xl font-extrabold text-slate-900">DigiCare</p>
       <p className="mt-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-accent-purple">Giáo dục an toàn, khoa học & thân thiện</p>
       <div className="mt-6 w-48 h-2 bg-slate-200 rounded-full mx-auto overflow-hidden relative">
         <div className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-cyan-500 to-accent-purple rounded-full" style={{ animation: 'loadingSlide 1.4s ease-in-out infinite' }}></div>

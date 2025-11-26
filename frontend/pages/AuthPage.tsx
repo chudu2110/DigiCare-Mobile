@@ -42,7 +42,7 @@ export const AuthPage: React.FC<{
           <div className="group mx-auto w-20 h-20 flex items-center justify-center rounded-2xl bg-white/20 backdrop-blur animate-heartbeat transition-all duration-300 hover:bg-white/30 hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] hover:ring-2 hover:ring-cyan-300">
             {LANDING_ICONS.logo}
           </div>
-          <h1 className="mt-6 text-4xl font-black">SafeLearn</h1>
+          <h1 className="mt-6 text-4xl font-black">DigiCare</h1>
           <p className="mt-3 text-slate-700 dark:text-slate-300">Giáo dục giới tính an toàn, khoa học & thân thiện</p>
           <div className="mt-8 grid grid-cols-3 gap-4 text-left">
             <div className="group p-3 rounded-2xl bg-white/60 dark:bg-white/10 backdrop-blur transition-all duration-300 hover:bg-white/80 dark:hover:bg-white/20 hover:shadow-xl hover:-translate-y-1">
@@ -72,7 +72,7 @@ export const AuthPage: React.FC<{
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 text-slate-900 dark:text-white">
               {LANDING_ICONS.logo}
-              <span className="text-xl font-extrabold">SafeLearn</span>
+              <span className="text-xl font-extrabold">DigiCare</span>
             </div>
             <button onClick={onBack} className="text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-300">Quay lại</button>
           </div>
