@@ -19,7 +19,6 @@ export const LessonPlayer: React.FC<{
   const [activeIndex, setActiveIndex] = useState(initialIndex);
   const [speed, setSpeed] = useState(1);
   const [volume, setVolume] = useState(1);
-  const [note, setNote] = useState('');
   const [zoom, setZoom] = useState(false);
   const [showControls, setShowControls] = useState(true);
   const [duration, setDuration] = useState(0);
@@ -281,7 +280,7 @@ export const LessonPlayer: React.FC<{
         </div>
       </div>
 
-      <div className={`${zoom ? 'grid grid-cols-[1fr]' : 'grid grid-cols-[320px,1fr,320px]'} flex-1 gap-4 p-4 sm:p-6`}>
+      <div className={`${zoom ? 'grid grid-cols-[1fr]' : 'grid grid-cols-1 lg:grid-cols-[280px,1fr]'} flex-1 gap-3 lg:gap-4 p-3 sm:p-5`}>
         <aside className={`${zoom ? 'hidden' : ''} rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col`}>
           <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700">
             <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">Mục lục</p>
@@ -308,17 +307,17 @@ export const LessonPlayer: React.FC<{
         <main className="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 overflow-hidden">
           <div className="relative">
             {isVideo && isYouTube ? (
-              <div id={playerId} className={zoom ? 'w-full h-[calc(100vh-56px-2rem)] bg-black' : 'w-full h-[65vh] bg-black'} />
+              <div id={playerId} className={zoom ? 'w-full h-[calc(100vh-56px-2rem)] bg-black' : 'w-full h-[78vh] sm:h-[75vh] bg-black'} />
             ) : isVideo ? (
               <video
                 ref={videoRef}
                 key={active.id}
                 src={active.src || 'https://www.w3schools.com/html/mov_bbb.mp4'}
                 controls={!zoom}
-                className={zoom ? 'w-full h-[calc(100vh-56px-2rem)] bg-black object-contain' : 'w-full h-[65vh] bg-black object-contain'}
+                className={zoom ? 'w-full h-[calc(100vh-56px-2rem)] bg-black object-contain' : 'w-full h-[78vh] sm:h-[75vh] bg-black object-contain'}
               />
             ) : (
-              <div className="p-6">
+              <div className="p-6 min-h-[45vh]">
                 <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{active.title}</h2>
                 <p className="text-slate-600 dark:text-slate-300">Nội dung đọc tương tác sẽ hiển thị tại đây.</p>
               </div>
@@ -393,18 +392,7 @@ export const LessonPlayer: React.FC<{
           </div>
         </main>
 
-        <aside className={`${zoom ? 'hidden' : ''} rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col`}>
-          <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700">
-            <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">Ghi chú</p>
-          </div>
-          <div className="p-4 space-y-3">
-            <textarea value={note} onChange={e=>setNote(e.target.value)} className="w-full h-40 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white p-3" placeholder="Viết ghi chú của bạn"/>
-            <div className="flex items-center justify-between">
-              <button className="px-3 py-1.5 rounded-md text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Xuất ghi chú</button>
-              <button className="px-3 py-1.5 rounded-md text-sm font-bold bg-cyan-600 hover:bg-cyan-700 text-white">Lưu</button>
-            </div>
-          </div>
-        </aside>
+        
       </div>
     </div>
   );
