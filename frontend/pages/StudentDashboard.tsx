@@ -15,7 +15,7 @@ export const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole })
   const yGap = 120;
   const lanes = [0, 100, 0, 100];
   const progressKey = useMemo(() => selectedLesson ? `progress:${userRole}:${selectedLesson.id}` : '', [userRole, selectedLesson]);
-  const sectionsMemo = useMemo(() => selectedLesson ? (getLessonSections(userRole, selectedLesson.id, selectedLesson.title) as any) : [], [userRole, selectedLesson]);
+  const sections = selectedLesson ? (getLessonSections(userRole, selectedLesson.id, selectedLesson.title) as any) : [];
 
   useEffect(() => {
     if (selectedLesson) {
@@ -479,7 +479,7 @@ export const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole })
       {playing && selectedLesson && (
         <LessonPlayer
           title={selectedLesson.title}
-          sections={sectionsMemo}
+          sections={sections}
           onClose={()=>setPlaying(false)}
           onNext={()=>{
             if (!selectedLesson) { setPlaying(false); return; }

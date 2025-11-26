@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import { StudentDashboard as StudentDashboardPage } from './frontend/pages/StudentDashboard';
 import { LandingPage as LandingPageExternal } from './pages/LandingPage';
 import { UserRole, View, CourseModule, QASubmission, ServicePoint, MapServiceType, RoadmapItem, LeaderboardUser, Scenario, AdminStats, ModuleCompletion, UserDistribution } from './types';
 import { SCENARIOS_MS } from './data/scenarios-ms';
@@ -1690,22 +1691,22 @@ const MainApp: React.FC<{
   
   const renderView = () => {
     const isStudent = userRole === UserRole.STUDENT_MS || userRole === UserRole.STUDENT_HS;
-    switch(currentView) {
+  switch(currentView) {
       case View.STUDENT_DASHBOARD:
-        return <StudentDashboard userRole={userRole} />;
+        return <StudentDashboardPage userRole={userRole} />;
       case View.PARENT_DASHBOARD:
         return <ParentDashboard setView={setView} />;
       case View.ADMIN_DASHBOARD:
         return <AdminDashboard />;
       case View.SCENARIOS:
-        return isStudent ? <ScenarioPage userRole={userRole} /> : <StudentDashboard userRole={userRole} />;
+        return isStudent ? <ScenarioPage userRole={userRole} /> : <StudentDashboardPage userRole={userRole} />;
       case View.MAP:
         return <MapPage />;
       case View.QA:
         return <QAPage />;
       default:
-        return userRole === UserRole.ADMIN ? <AdminDashboard /> : isStudent ? <StudentDashboard userRole={userRole} /> : <ParentDashboard setView={setView} />;
-    }
+        return userRole === UserRole.ADMIN ? <AdminDashboard /> : isStudent ? <StudentDashboardPage userRole={userRole} /> : <ParentDashboard setView={setView} />;
+  }
   }
 
   return (
