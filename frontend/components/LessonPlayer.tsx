@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { READING_TOPICS, getReadingTopicByKey } from '../content/reading';
-import { QUIZ_QUESTIONS } from '../content/quiz';
+import { QUIZ_QUESTIONS, getThcsQuizByLesson } from '../content/quiz';
 
 type LessonSection = {
   id: string;
@@ -495,7 +495,7 @@ export const LessonPlayer: React.FC<{
               </div>
             ) : active.kind === 'quiz' ? (
               <div className="p-6 min-h-[45vh]">
-                <QuizBlock questions={QUIZ_QUESTIONS.default} onComplete={() => {
+                <QuizBlock questions={getThcsQuizByLesson(parseInt(((sections[0]?.id || '').split('-')[1]) || '1'))} onComplete={() => {
                   setCompleted(prev => {
                     const next = [...prev];
                     next[activeIndex] = true;
@@ -550,7 +550,7 @@ export const LessonPlayer: React.FC<{
                     })()
                   ) : (
                     <div className="max-w-3xl mx-auto">
-                      <QuizBlock questions={QUIZ_QUESTIONS.default} onComplete={() => setSubView(null)} />
+                      <QuizBlock questions={getThcsQuizByLesson(parseInt(((sections[0]?.id || '').split('-')[1]) || '1'))} onComplete={() => setSubView(null)} />
                     </div>
                   )}
                 </div>
