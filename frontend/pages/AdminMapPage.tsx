@@ -25,6 +25,7 @@ export const AdminMapPage: React.FC = () => {
   const [nearby, setNearby] = useState<any[]>([]);
   const [nearLoading, setNearLoading] = useState(false);
   const [eventMarks, setEventMarks] = useState<any[]>([]);
+  const endTimersRef = useRef<Record<number, any>>({});
   const onPosition = useCallback((lat: number, lng: number) => { setUserPos([lat, lng]); setGeoError(null); }, []);
   const [evName, setEvName] = useState('');
   const [evStart, setEvStart] = useState('');
@@ -71,10 +72,20 @@ export const AdminMapPage: React.FC = () => {
       localStorage.setItem('admin_events', JSON.stringify(arr));
       setEvMsg('Đã lưu sự kiện');
       if (lat !== null && lon !== null) {
-        setEventMarks(prev => [...prev, { lat, lon, name: evObj.name, start: evObj.start, end: evObj.end, place: evObj.place, topics: evObj.topics, audiences: evObj.audiences, content: evObj.content }]);
+        setEventMarks(prev => [...prev, { lat, lon, name: evObj.name, start: evObj.start, end: evObj.end, place: evObj.place, topics: evObj.topics, audiences: evObj.audiences, content: evObj.content, ts: evObj.ts }]);
         setSearchPos([lat, lon]);
         if (mapRef.current) mapRef.current.setView([lat, lon], 16, { animate: true });
       }
+      const scheduleEnd = () => {
+        if (!evObj.end || !evObj.ts) return;
+        const t = Date.parse(evObj.end);
+        if (!Number.isFinite(t)) return;
+        const delay = t - Date.now();
+        if (delay <= 0) { cancelEvent(evObj.ts); return; }
+        const id = setTimeout(() => { cancelEvent(evObj.ts); }, delay);
+        endTimersRef.current[evObj.ts] = id;
+      };
+      scheduleEnd();
       setEvName(''); setEvStart(''); setEvEnd(''); setEvTopics([]); setEvContent(''); setEvAudiences([]); setEvPlace('');
     } catch {
       setEvMsg('Có lỗi khi lưu sự kiện');
@@ -187,9 +198,53 @@ export const AdminMapPage: React.FC = () => {
     try {
       const raw = localStorage.getItem('admin_events');
       const arr = raw ? JSON.parse(raw) : [];
-      const marks = Array.isArray(arr) ? arr.filter((e:any) => typeof e.lat === 'number' && typeof e.lon === 'number').map((e:any) => ({ lat: e.lat, lon: e.lon, name: e.name, start: e.start || e.time || '', end: e.end || '', place: e.place, topics: e.topics || [], audiences: e.audiences || [], content: e.content || '' })) : [];
+      const marks = Array.isArray(arr) ? arr.filter((e:any) => typeof e.lat === 'number' && typeof e.lon === 'number').map((e:any) => ({ lat: e.lat, lon: e.lon, name: e.name, start: e.start || e.time || '', end: e.end || '', place: e.place, topics: e.topics || [], audiences: e.audiences || [], content: e.content || '', ts: e.ts })) : [];
       setEventMarks(marks);
+      for (const e of Array.isArray(arr) ? arr : []) {
+        if (!e || !e.ts) continue;
+        const end = e.end || '';
+        if (!end) continue;
+        const t = Date.parse(end);
+        if (!Number.isFinite(t)) continue;
+        const delay = t - Date.now();
+        if (delay <= 0) { cancelEvent(e.ts); continue; }
+        const id = setTimeout(() => { cancelEvent(e.ts); }, delay);
+        endTimersRef.current[e.ts] = id;
+      }
     } catch {}
+  }, []);
+  const cancelEvent = (ts: number) => {
+    try {
+      const raw = localStorage.getItem('admin_events');
+      const arr = raw ? JSON.parse(raw) : [];
+      const next = Array.isArray(arr) ? arr.filter((e:any) => e.ts !== ts) : [];
+      localStorage.setItem('admin_events', JSON.stringify(next));
+      setEventMarks(prev => prev.filter(m => m.ts !== ts));
+      const tid = endTimersRef.current[ts];
+      if (tid) { clearTimeout(tid); delete endTimersRef.current[ts]; }
+    } catch {}
+  };
+  useEffect(() => {
+    const cleanup = () => {
+      try {
+        const raw = localStorage.getItem('admin_events');
+        const arr = raw ? JSON.parse(raw) : [];
+        const now = Date.now();
+        const keep = Array.isArray(arr) ? arr.filter((e:any) => {
+          const end = e.end || '';
+          if (!end) return true;
+          const t = Date.parse(end);
+          if (!Number.isFinite(t)) return true;
+          return t >= now;
+        }) : [];
+        localStorage.setItem('admin_events', JSON.stringify(keep));
+        const marks = keep.filter((e:any) => typeof e.lat === 'number' && typeof e.lon === 'number').map((e:any) => ({ lat: e.lat, lon: e.lon, name: e.name, start: e.start || e.time || '', end: e.end || '', place: e.place, topics: e.topics || [], audiences: e.audiences || [], content: e.content || '', ts: e.ts }));
+        setEventMarks(marks);
+      } catch {}
+    };
+    cleanup();
+    const id = setInterval(cleanup, 30000);
+    return () => { clearInterval(id); };
   }, []);
   const search = async () => {
     const query = q.trim();
@@ -549,6 +604,9 @@ export const AdminMapPage: React.FC = () => {
                       {m.content ? (
                         <div className="text-xs"><span className="font-semibold">Nội dung: </span><span className="whitespace-pre-line">{m.content}</span></div>
                       ) : null}
+                      <div className="pt-1">
+                        <button type="button" onClick={()=>cancelEvent(m.ts)} className="px-3 py-1 rounded-md bg-red-500 text-white hover:bg-red-600 text-xs font-bold">Hủy sự kiện</button>
+                      </div>
                     </div>
                   </Popup>
                 </CircleMarker>
