@@ -64,7 +64,7 @@ export const STUDENT_HS_COURSES: CourseModule[] = [
 export const PARENT_RESOURCES = [
     { id: 'p1', title: 'Nói chuyện về giới tính với con', description: 'Các kịch bản hội thoại nhẹ nhàng, hiệu quả.', icon: ICONS.chat, type: 'article' },
     { id: 'p2', title: 'Case study: Con tò mò về tình dục', description: 'Podcast phân tích tình huống thực tế từ chuyên gia.', icon: ICONS.book, type: 'podcast' },
-    { id: 'p3', title: 'Đồng hành cùng con tuổi dậy thì', description: 'Video chia sẻ từ các bậc phụ huynh khác.', icon: ICONS.body, type: 'video' },
+    { id: 'p3', title: 'Đồng hành cùng con tuổi dậy thì', description: 'Video chia sẻ từ các chuyên gia và bậc phụ huynh khác.', icon: ICONS.body, type: 'video' },
 ];
 
 export const QA_DATA: QASubmission[] = [

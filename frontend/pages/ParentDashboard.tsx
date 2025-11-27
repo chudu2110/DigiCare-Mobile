@@ -28,6 +28,8 @@ export const ParentDashboard: React.FC<{setView: (view: View) => void;}> = ({set
                     onOpen={() => {
                       if (res.id === 'p1') {
                         setView(View.PARENT_ARTICLES);
+                      } else if (res.id === 'p3') {
+                        setView(View.PARENT_VIDEOS);
                       }
                     }}
                   />
