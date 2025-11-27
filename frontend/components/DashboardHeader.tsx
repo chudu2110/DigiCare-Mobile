@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState, useEffect } from 'react';
 import { LANDING_ICONS, ICONS } from '../constants';
 import { UserRole, View } from '../types';
 
@@ -20,6 +20,23 @@ export const DashboardHeader: React.FC<{
   const containerRef = useRef<HTMLDivElement>(null);
   const btnRefs = useRef<Record<number, HTMLButtonElement | null>>({});
   const [indicator, setIndicator] = useState<{ x: number; width: number }>({ x: 0, width: 0 });
+  const [isDark, setIsDark] = useState(false);
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('theme');
+      const dark = saved === 'dark' || document.documentElement.classList.contains('dark');
+      setIsDark(dark);
+    } catch {
+      setIsDark(document.documentElement.classList.contains('dark'));
+    }
+  }, []);
+  const toggleDark = () => {
+    const html = document.documentElement;
+    const next = !html.classList.contains('dark');
+    html.classList.toggle('dark', next);
+    setIsDark(next);
+    try { localStorage.setItem('theme', next ? 'dark' : 'light'); } catch {}
+  };
 
   const NavButton = React.forwardRef<HTMLButtonElement, { view: View; icon: React.ReactNode; label: string }>(
     ({ view, icon, label }, ref) => {
@@ -84,21 +101,28 @@ export const DashboardHeader: React.FC<{
             )}
           </div>
           <div className="flex items-center space-x-2">
-            {!isParent && currentView !== View.MOODTRACKER && (
-              <div className="bg-slate-100 dark:bg-slate-800 p-1 rounded-full flex items-center">
-                {(() => {
-                  const base = [UserRole.STUDENT_MS, UserRole.STUDENT_HS];
-                  const roles = userRole === UserRole.ADMIN ? [...base, UserRole.ADMIN] : base;
-                  return roles;
-                })().map(role => (
-                  <button key={role}
-                      onClick={() => setUserRole(role)}
-                      className={`px-3 py-1.5 text-xs font-bold rounded-full transition-colors duration-300 ${userRole === role ? 'bg-white dark:bg-slate-900 text-cyan-600 dark:text.white shadow-md' : 'text-slate-500 dark:text-slate-300'}`}
-                  >
-                     {role === UserRole.STUDENT_MS ? "THCS" : role === UserRole.STUDENT_HS ? "THPT" : "Admin"}
-                  </button>
-                ))}
-              </div>
+            {userRole === UserRole.ADMIN && currentView !== View.MOODTRACKER ? (
+              <button onClick={toggleDark} aria-label="Chuyển chế độ tối" className="flex items-center gap-2 text-sm font-bold px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-100 hover:dark:bg-slate-700 transition-colors">
+                {isDark ? ICONS.sun : ICONS.moon}
+                <span className="hidden sm:inline">{isDark ? 'Dark Mode' : 'Light Mode'}</span>
+              </button>
+            ) : (
+              !isParent && currentView !== View.MOODTRACKER && (
+                <div className="bg-slate-100 dark:bg-slate-800 p-1 rounded-full flex items-center">
+                  {(() => {
+                    const base = [UserRole.STUDENT_MS, UserRole.STUDENT_HS];
+                    const roles = base;
+                    return roles;
+                  })().map(role => (
+                    <button key={role}
+                        onClick={() => setUserRole(role)}
+                        className={`px-3 py-1.5 text-xs font-bold rounded-full transition-colors duration-300 ${userRole === role ? 'bg-white dark:bg-slate-900 text-cyan-600 dark:text.white shadow-md' : 'text-slate-500 dark:text-slate-300'}`}
+                    >
+                       {role === UserRole.STUDENT_MS ? "THCS" : "THPT"}
+                    </button>
+                  ))}
+                </div>
+              )
             )}
           </div>
         </div>
