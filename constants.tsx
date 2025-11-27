@@ -16,6 +16,7 @@ export const ICONS = {
   chat: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6"><path fillRule="evenodd" d="M4.848 2.771A49.144 49.144 0 0 1 12 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 0 1-3.476.383.39.39 0 0 0-.297.15l-2.755 4.133a.75.75 0 0 1-1.248 0l-2.755-4.133a.39.39 0 0 0-.297-.15 48.9 48.9 0 0 1-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.74c0-1.947 1.37-3.68 3.348-3.97Z" clipRule="evenodd" /></svg>,
   book: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6"><path fillRule="evenodd" d="M12 2.25a.75.75 0 0 1 .75.75v16.5a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75Z" clipRule="evenodd" /><path d="M3.527 3.97a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L10.44 12 3.527 5.03a.75.75 0 0 1 0-1.06ZM17.473 3.97a.75.75 0 0 1 1.06 0l-7.5 7.5a.75.75 0 0 1 0 1.06l7.5 7.5a.75.75 0 1 1-1.06 1.06L10.44 12l6.973-6.97a.75.75 0 0 1 1.06 0Z" /></svg>,
   question: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6"><path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm11.378-3.917c-.882 0-1.672.504-1.963 1.288-.29.784-.171 1.65.316 2.284 1.453 1.906 2.252 3.597 2.252 5.482v.25a.75.75 0 0 1-1.5 0v-.25c0-1.355-.63-2.65-1.633-3.662-.51-.508-.88-1.18-.943-1.928a2.983 2.983 0 0 1 2.97-2.97c1.65 0 2.983 1.334 2.983 2.984 0 .792-.31 1.528-.829 2.078a.75.75 0 0 1-1.189-.925c.34-.44.518-.96.518-1.503 0-.82-.66-1.48-1.48-1.48Zm-1.628 12.083a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clipRule="evenodd" /></svg>,
+  podcast: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6"><rect x="9" y="2" width="6" height="10" rx="3"/><path d="M5 11a7 7 0 0014 0h-2a5 5 0 11-10 0H5z"/><path d="M11 19h2v3h-2z"/></svg>,
   // FIX: Add users icon to fix property does not exist error
   users: <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm6-11a7 7 0 10-14 0h14z" /></svg>,
   // Gamification Icons
@@ -63,7 +64,7 @@ export const STUDENT_HS_COURSES: CourseModule[] = [
 
 export const PARENT_RESOURCES = [
     { id: 'p1', title: 'Nói chuyện về giới tính với con', description: 'Các kịch bản hội thoại nhẹ nhàng, hiệu quả.', icon: ICONS.chat, type: 'article' },
-    { id: 'p2', title: 'Case study: Con tò mò về tình dục', description: 'Podcast phân tích tình huống thực tế từ chuyên gia.', icon: ICONS.book, type: 'podcast' },
+    { id: 'p2', title: 'Case study: Con tò mò về tình dục', description: 'Podcast phân tích tình huống thực tế từ chuyên gia.', icon: ICONS.podcast, type: 'podcast' },
     { id: 'p3', title: 'Đồng hành cùng con tuổi dậy thì', description: 'Video chia sẻ từ các chuyên gia và bậc phụ huynh khác.', icon: ICONS.body, type: 'video' },
 ];
 

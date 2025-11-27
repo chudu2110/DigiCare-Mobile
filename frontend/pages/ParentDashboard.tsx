@@ -30,6 +30,8 @@ export const ParentDashboard: React.FC<{setView: (view: View) => void;}> = ({set
                         setView(View.PARENT_ARTICLES);
                       } else if (res.id === 'p3') {
                         setView(View.PARENT_VIDEOS);
+                      } else if (res.id === 'p2') {
+                        setView(View.PARENT_PODCASTS);
                       }
                     }}
                   />

@@ -20,6 +20,7 @@ export enum View {
   MOODTRACKER,
   PARENT_ARTICLES,
   PARENT_VIDEOS,
+  PARENT_PODCASTS,
 }
 
 export interface CourseModule {
