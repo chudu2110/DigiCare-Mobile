@@ -103,14 +103,14 @@ export const ROADMAP_MS_DATA: RoadmapItem[] = [
 ];
 
 export const ROADMAP_HS_DATA: RoadmapItem[] = [
-    { id: 1, type: 'lesson', title: 'Bài 1: Đồng thuận trong mối quan hệ', status: 'completed', position: { top: '5%', left: '60%' } },
-    { id: 2, type: 'lesson', title: 'Bài 2: Tránh thai an toàn', status: 'completed', position: { top: '18%', left: '35%' } },
-    { id: 3, type: 'lesson', title: 'Bài 3: Phòng ngừa bệnh lây qua đường tình dục (STIs)', status: 'current', position: { top: '30%', left: '70%' } },
-    { id: 4, type: 'badge', title: 'Huy hiệu "An Toàn & Tôn Trọng"', status: 'locked', position: { top: '45%', left: '50%' } },
-    { id: 5, type: 'lesson', title: 'Bài 5: An toàn trên môi trường số', status: 'locked', position: { top: '60%', left: '30%' } },
-    { id: 6, type: 'lesson', title: 'Bài 6: Đa dạng bản dạng giới', status: 'locked', position: { top: '75%', left: '65%' } },
-    { id: 7, type: 'lesson', title: 'Bài 7: Trách nhiệm pháp lý liên quan', status: 'locked', position: { top: '88%', left: '40%' } },
-    { id: 8, type: 'badge', title: 'Huy hiệu "Hiểu Luật"', status: 'locked', position: { top: '100%', left: '55%' } },
+    { id: 1, type: 'lesson', title: 'Bài 1: Con trai con gái và sự công bằng', status: 'completed', position: { top: '5%', left: '60%' } },
+    { id: 2, type: 'lesson', title: 'Bài 2: Động chạm không an toàn', status: 'completed', position: { top: '18%', left: '35%' } },
+    { id: 3, type: 'lesson', title: 'Bài 3: Con trai và bao quy đầu', status: 'current', position: { top: '30%', left: '70%' } },
+    { id: 4, type: 'lesson', title: 'Bài 4: Trẻ vị thành niên mang thai', status: 'locked', position: { top: '45%', left: '50%' } },
+    { id: 5, type: 'lesson', title: 'Bài 5: Xâm hại trên mạng xã hội', status: 'locked', position: { top: '60%', left: '30%' } },
+    { id: 6, type: 'lesson', title: 'Bài 6: Thay đồ nơi công cộng', status: 'locked', position: { top: '75%', left: '65%' } },
+    { id: 7, type: 'lesson', title: 'Bài 7: Xâm hại ở trường học', status: 'locked', position: { top: '88%', left: '40%' } },
+    { id: 8, type: 'badge', title: 'Huy Hiệu "Phòng Tránh Xâm Hại"', status: 'locked', position: { top: '100%', left: '55%' } },
 ];
 
 export const LEADERBOARD_DATA: LeaderboardUser[] = [
