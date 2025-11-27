@@ -11,6 +11,7 @@ import { StudentDashboard } from './pages/StudentDashboard';
 import { ParentDashboard } from './pages/ParentDashboard';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { AdminNotifications } from './pages/AdminNotifications';
+import { AdminMapPage } from './pages/AdminMapPage';
 import { MoodTrackerPage } from './pages/MoodTrackerPage';
 import { ParentArticlesPage } from './pages/ParentArticlesPage';
 import { ParentVideosPage } from './pages/ParentVideosPage';
@@ -173,6 +174,8 @@ export default function App() {
         return <AdminDashboard />;
       case View.ADMIN_NOTIFICATIONS:
         return <AdminNotifications />;
+      case View.ADMIN_MAP:
+        return <AdminMapPage />;
       case View.SCENARIOS:
         return (isStudent || userRole === UserRole.PARENT) ? <ScenarioPage userRole={userRole} /> : <StudentDashboard userRole={userRole} />;
       case View.MAP:

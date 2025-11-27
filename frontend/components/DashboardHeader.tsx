@@ -93,6 +93,7 @@ export const DashboardHeader: React.FC<{
               <>
                 <NavButton ref={(el) => (btnRefs.current[View.ADMIN_DASHBOARD] = el)} view={View.ADMIN_DASHBOARD} icon={ICONS.admin} label="Thống kê" />
                 <NavButton ref={(el) => (btnRefs.current[View.ADMIN_NOTIFICATIONS] = el)} view={View.ADMIN_NOTIFICATIONS} icon={ICONS.chat} label="Thông báo" />
+                <NavButton ref={(el) => (btnRefs.current[View.ADMIN_MAP] = el)} view={View.ADMIN_MAP} icon={ICONS.map} label="Bản Đồ" />
               </>
             ) : (
               <>
