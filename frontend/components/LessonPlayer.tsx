@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { READING_TOPICS, getReadingTopicByKey } from '../content/reading';
+import { THPT_READING_TOPICS } from '../content/reading/thpt';
 import { QUIZ_QUESTIONS, getThcsQuizByLesson } from '../content/quiz';
 import { getThptQuizByLesson } from '../content/quiz/thpt';
 import { UserRole } from '../types';
@@ -537,7 +538,9 @@ export const LessonPlayer: React.FC<{
                   </div>
                   {subView.type === 'foundation' ? (
                     (() => {
-                      const topic = READING_TOPICS.find(t => t.id === subView.id) || READING_TOPICS[0];
+                      const isHs = (subView.id || '').startsWith('thpt-');
+                      const source = isHs ? THPT_READING_TOPICS : READING_TOPICS;
+                      const topic = source.find(t => t.id === subView.id) || source[0];
                       return (
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                           <div className="lg:col-span-2 space-y-6">

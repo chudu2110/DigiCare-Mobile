@@ -338,8 +338,6 @@ const initialTopics = [
     ]
   )
 ];
-
 const repo = new Repo(initialTopics);
-
 export const READING_TOPICS = repo.all();
 export const getReadingTopicByKey = (key?: string) => repo.getByKey(key);

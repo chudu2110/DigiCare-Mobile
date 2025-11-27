@@ -23,7 +23,7 @@ export const getThptSections = (lessonId: number, title: string) => {
   const vTitle = TITLES[lessonId] || 'Mở đầu';
   return [
     { id: `s1-${lessonId}`, title: vTitle, kind: 'video', durationLabel: '3 phút', src },
-    { id: `s2-${lessonId}`, title: 'Kiến thức nâng cao', kind: 'foundation', durationLabel: '8 phút' },
+    { id: `s2-${lessonId}`, title: 'Kiến thức nâng cao', kind: 'foundation', durationLabel: '8 phút', readingId: `thpt-bai${lessonId}` },
     { id: `s3-${lessonId}`, title: 'Câu hỏi ôn tập', kind: 'quick', durationLabel: '5 phút' },
   ] as const;
 };
