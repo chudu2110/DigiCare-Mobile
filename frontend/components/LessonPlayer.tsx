@@ -358,7 +358,7 @@ export const LessonPlayer: React.FC<{
   
 
   return (
-    <div ref={containerRef} onMouseMove={handleMouseMove} className="fixed inset-0 z-[60] flex flex-col bg-slate-50 dark:bg-slate-900">
+    <div ref={containerRef} onMouseMove={handleMouseMove} className="lesson-player fixed inset-0 z-[60] flex flex-col bg-slate-50 dark:bg-slate-900">
       <div className="flex items-center justify-between px-4 sm:px-6 h-14 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
         <div className="flex items-center gap-3">
           <button onClick={onClose} className="px-3 py-1.5 rounded-md text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Thoát</button>
@@ -373,7 +373,7 @@ export const LessonPlayer: React.FC<{
       </div>
 
       <div className={`${zoom ? 'grid grid-cols-[1fr]' : 'grid grid-cols-1 lg:grid-cols-[280px,1fr]'} flex-1 gap-3 lg:gap-4 p-3 sm:p-5`}>
-        <aside className={`${zoom ? 'hidden' : ''} rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col`}>
+        <aside className={`playlist ${zoom ? 'hidden' : ''} rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col`}>
           <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700">
             <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">Mục lục</p>
           </div>
@@ -593,7 +593,7 @@ export const LessonPlayer: React.FC<{
                     </div>
                   )}
                 </div>
-                <div className="mt-2 flex items-center gap-2">
+                <div className="player-controls mt-2 flex items-center gap-2">
                   <button onClick={()=>togglePlay()} className="w-9 h-9 rounded-full bg-slate-900/80 text-white flex items-center justify-center">
                     {paused ? (
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>

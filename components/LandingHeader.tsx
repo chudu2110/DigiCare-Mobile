@@ -59,6 +59,14 @@ export const LandingHeader: React.FC<{ onNavigate: (target: string) => void; isL
             )}
           </div>
         </div>
+        <div className="md:hidden pt-2 pb-3">
+          <nav className="nav-anim overflow-x-auto no-scrollbar">
+            <button onClick={() => scrollToId('features')} className="nav-anim-link">Tính năng</button>
+            <button onClick={() => onNavigate('Khóa học')} className="nav-anim-link">Khóa học</button>
+            <button onClick={() => onNavigate('Phụ huynh')} className="nav-anim-link">Phụ huynh</button>
+            <button onClick={() => scrollToId('contact')} className="nav-anim-link">Liên hệ</button>
+          </nav>
+        </div>
       </div>
     </header>
   );

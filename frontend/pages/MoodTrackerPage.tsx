@@ -367,7 +367,7 @@ const DayEditor: React.FC<{
           ['--scroll-thumb' as any]: palette?.border,
           ['--scroll-thumb-hover' as any]: palette?.accent,
         }}>
-          <VintageCard vintage={vintage} palette={palette} className="p-4">
+          <VintageCard vintage={vintage} palette={palette} className="mood-card p-4">
             <p className={`${vintage ? 'font-serif' : 'font-bold'}`} style={{ color: palette?.text }}>Ngày hôm nay của bạn thế nào?</p>
             <div className="mt-2 flex items-center gap-2 overflow-x-auto custom-scroll-x" style={{
               ['--scroll-bg' as any]: 'transparent',
@@ -388,7 +388,7 @@ const DayEditor: React.FC<{
             </div>
           </VintageCard>
           {CATEGORY_GROUPS.map(g => (
-            <VintageCard key={g.key} vintage={vintage} palette={palette} className="p-4">
+            <VintageCard key={g.key} vintage={vintage} palette={palette} className="mood-card p-4">
               <div className="flex items-center justify-between">
                 <p className={`${vintage ? 'font-serif' : 'font-bold'}`} style={{ color: palette?.text }}>{g.title}</p>
                 <div className="flex items-center gap-2">
@@ -458,12 +458,12 @@ const DayEditor: React.FC<{
             </VintageCard>
           ))}
           
-          <VintageCard vintage={vintage} palette={palette} className="p-4">
+          <VintageCard vintage={vintage} palette={palette} className="mood-card p-4">
             <p className={`${vintage ? 'font-serif' : 'font-bold'}`} style={{ color: palette?.text }}>Bạn có muốn viết 1 chút gì đó về hôm nay cho bản thân không?</p>
             <textarea value={value.note || ''} onChange={e => onChange({ ...value, note: e.target.value })} placeholder="Viết vài dòng..." className={`mt-3 w-full h-24 px-3 py-2 rounded-lg text-sm`}
               style={{ backgroundColor: palette?.bg, border: `1px solid ${palette?.border}`, color: palette?.text }}/>
           </VintageCard>
-          <VintageCard vintage={vintage} palette={palette} className="p-4">
+          <VintageCard vintage={vintage} palette={palette} className="mood-card p-4">
             <p className={`${vintage ? 'font-serif' : 'font-bold'}`} style={{ color: palette?.text }}>Bạn có được một giấc ngủ tốt hôm nay chứ?</p>
             <div className="mt-3 flex items-center gap-3">
               <input
@@ -472,7 +472,7 @@ const DayEditor: React.FC<{
                 max={14}
                 value={value.sleepHours || 0}
                 onChange={e => onChange({ ...value, sleepHours: parseInt(e.target.value) })}
-                className="range-themed flex-1"
+                className="mood-range range-themed flex-1"
                 style={{
                   ['--range-track' as any]: palette?.bg,
                   ['--range-thumb' as any]: palette?.cardBg,

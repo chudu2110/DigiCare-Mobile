@@ -472,14 +472,14 @@ export const MapPage: React.FC = () => {
         <p className="text-lg text-slate-500 dark:text-slate-300">Tìm kiếm các địa điểm hỗ trợ sức khỏe thân thiện và tin cậy.</p>
       </div>
       <div className="bg-white dark:bg-slate-800 p-3 rounded-2xl shadow-xl shadow-slate-900/5 dark:shadow-[0_0_18px_rgba(15,23,42,0.35)] border border-slate-200 dark:border-slate-700">
-        <div className="flex items-center gap-2 justify-end pb-3">
-          <div ref={toolbarRef} className="relative flex items-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 shadow">
-            <input value={q} onChange={(e)=>setQ(e.target.value)} onFocus={()=>setShowSug(suggestions.length>0)} onKeyDown={(e)=>{ if(e.key==='Enter'){ e.preventDefault(); search(); } }} placeholder="Tìm kiếm địa chỉ" className="px-2 py-1 bg-transparent outline-none text-sm dark:text-white" />
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-2 justify-end pb-3">
+          <div ref={toolbarRef} className="relative flex items-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 shadow w-full sm:w-auto">
+            <input value={q} onChange={(e)=>setQ(e.target.value)} onFocus={()=>setShowSug(suggestions.length>0)} onKeyDown={(e)=>{ if(e.key==='Enter'){ e.preventDefault(); search(); } }} placeholder="Tìm kiếm địa chỉ" className="flex-1 px-2 py-1 bg-transparent outline-none text-sm dark:text-white" />
             <button onClick={search} disabled={loading} className="px-3 py-1.5 rounded-md text-sm font-bold bg-cyan-500 text-white hover:bg-cyan-600">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-4 h-4"><circle cx="11" cy="11" r="7" strokeWidth="2"/><path d="M20 20l-3.5-3.5" strokeWidth="2" strokeLinecap="round"/></svg>
             </button>
             {showSug && suggestions.length > 0 && (
-              <div className="absolute top-full right-0 mt-2 w-80 max-w-[80vw] max-h-56 overflow-y-auto bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg z-[1000]">
+              <div className="absolute top-full right-0 mt-2 w-full sm:w-80 max-w-[90vw] max-h-56 overflow-y-auto bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg z-[1000]">
                 {suggestions.map((s, idx) => (
                   <button key={idx} onMouseDown={() => selectSuggestion(s)} className="block w-full text-left px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 text-sm dark:text-white">
                     {s.display_name}
@@ -488,7 +488,7 @@ export const MapPage: React.FC = () => {
               </div>
             )}
           </div>
-          <button onClick={locateMe} className="px-3 py-2 rounded-lg text-sm font-bold bg-cyan-500 text-white hover:bg-cyan-600">Vị trí của tôi</button>
+          <button onClick={locateMe} className="w-full sm:w-auto px-3 py-2 rounded-lg text-sm font-bold bg-cyan-500 text-white hover:bg-cyan-600">Vị trí của tôi</button>
           {geoError ? (
             <span className="ml-2 text-xs text-red-600 dark:text-red-400">{geoError}</span>
           ) : null}

@@ -45,7 +45,7 @@ export const DashboardHeader: React.FC<{
         <button
           ref={ref}
           onClick={() => setView(view)}
-          className={`relative z-10 inline-flex h-10 items-center justify-center gap-2 px-4 rounded-full text-sm font-semibold transition-colors duration-300 whitespace-nowrap min-w-[120px] sm:min-w-[140px] ${isActive ? 'text-cyan-600' : 'text-slate-500 hover:bg-cyan-500/10'}`}
+          className={`relative z-10 inline-flex h-10 items-center justify-center gap-2 px-3 sm:px-4 rounded-full text-sm font-semibold transition-colors duration-300 whitespace-nowrap min-w-[96px] sm:min-w-[120px] ${isActive ? 'text-cyan-600' : 'text-slate-500 hover:bg-cyan-500/10'}`}
         >
           <span className="w-5 h-5 flex items-center justify-center">{icon}</span>
           <span className="leading-none">{label}</span>
@@ -73,6 +73,7 @@ export const DashboardHeader: React.FC<{
   }, [currentView, userRole]);
   
   return (
+    <>
     <header className="sticky top-0 z-40 py-3">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative flex items-center justify-between h-14 bg-white/70 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl p-2 shadow-lg shadow-slate-900/5 dark:shadow-[0_0_18px_rgba(15,23,42,0.35)] border border-slate-200 dark:border-slate-700">
@@ -132,5 +133,38 @@ export const DashboardHeader: React.FC<{
         </div>
       </div>
     </header>
+    <nav className="fixed md:hidden bottom-0 left-0 right-0 z-40 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-700">
+      <div className="max-w-xl mx-auto grid grid-cols-4 gap-1 px-2 py-2">
+        {(() => {
+          const items: Array<{ view: View; icon: React.ReactNode; label: string }> = [];
+          if (currentView === View.MOODTRACKER) {
+            items.push({ view: View.MOODTRACKER, icon: ICONS.pencil, label: 'Cảm xúc' });
+            items.push({ view: View.MAP, icon: ICONS.map, label: 'Bản Đồ' });
+            items.push({ view: View.QA, icon: ICONS.qa, label: 'Hỏi Đáp' });
+            items.push({ view: homeView, icon: ICONS.dashboard, label: 'Tổng quan' });
+          } else if (isAdmin) {
+            items.push({ view: View.ADMIN_DASHBOARD, icon: ICONS.admin, label: 'Thống kê' });
+            items.push({ view: View.ADMIN_NOTIFICATIONS, icon: ICONS.chat, label: 'Thông báo' });
+            items.push({ view: View.ADMIN_MAP, icon: ICONS.map, label: 'Bản Đồ' });
+            items.push({ view: homeView, icon: ICONS.dashboard, label: 'Tổng quan' });
+          } else {
+            items.push({ view: homeView, icon: ICONS.dashboard, label: 'Tổng quan' });
+            if (isStudent || isParent) items.push({ view: View.SCENARIOS, icon: ICONS.scenarios, label: 'Tình huống' });
+            items.push({ view: View.QA, icon: ICONS.qa, label: 'Hỏi Đáp' });
+            items.push({ view: View.MAP, icon: ICONS.map, label: 'Bản Đồ' });
+          }
+          return items.slice(0, 4).map((it, idx) => {
+            const active = currentView === it.view;
+            return (
+              <button key={idx} onClick={() => setView(it.view)} className={`flex flex-col items-center justify-center gap-1 rounded-lg px-2 py-1 text-xs ${active ? 'text-cyan-600 bg-slate-100 dark:bg-slate-800' : 'text-slate-600 dark:text-slate-300'}`}>
+                <span className="w-5 h-5">{it.icon}</span>
+                <span className="truncate">{it.label}</span>
+              </button>
+            );
+          });
+        })()}
+      </div>
+    </nav>
+    </>
   );
 };

@@ -552,9 +552,9 @@ export const AdminMapPage: React.FC = () => {
         <p className="text-lg text-slate-500 dark:text-slate-300">Các địa điểm hỗ trợ sức khỏe thân thiện gần bạn.</p>
       </div>
       <div className="bg-white dark:bg-slate-800 p-3 rounded-2xl shadow-xl shadow-slate-900/5 dark:shadow-[0_0_18px_rgba(15,23,42,0.35)] border border-slate-200 dark:border-slate-700">
-        <div className="flex items-center gap-2 justify-end pb-3">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-2 justify-end pb-3">
           <div className="hidden"></div>
-          <button onClick={locateMe} className="px-3 py-2 rounded-lg text-sm font-bold bg-cyan-500 text-white hover:bg-cyan-600">Vị trí của tôi</button>
+          <button onClick={locateMe} className="w-full sm:w-auto px-3 py-2 rounded-lg text-sm font-bold bg-cyan-500 text-white hover:bg-cyan-600">Vị trí của tôi</button>
           {geoError ? (
             <span className="ml-2 text-xs text-red-600 dark:text-red-400">{geoError}</span>
           ) : null}

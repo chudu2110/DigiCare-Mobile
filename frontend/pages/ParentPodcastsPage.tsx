@@ -173,7 +173,7 @@ export const ParentPodcastsPage: React.FC = () => {
                 <iframe
                   src={toEmbed(active.url)}
                   title={active.title}
-                  className="w-full h-[32rem]"
+                  className="w-full h-64 sm:h-96 lg:h-[32rem]"
                   allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
                   allowFullScreen
                 />

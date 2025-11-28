@@ -32,20 +32,20 @@ export const LandingPage: React.FC<{ onNavigate: (target: string) => void; isLog
   };
 
   return (
-    <div className="bg-slate-50 dark:bg-slate-900 dark:text-slate-100 font-sans">
+    <div className="bg-slate-50 dark:bg-slate-900 dark:text-slate-100 font-sans pb-20">
         <LandingHeader onNavigate={onNavigate} isLoggedIn={isLoggedIn} userName={userName} isDark={isDark} onToggleDark={toggleDark} onLogout={onLogout} />
         <main>
-        <section className="container mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20">
+        <section className="section container mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 landing-hero">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
               <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-50 to-cyan-100 text-cyan-700 ring-1 ring-cyan-200 shadow-md shadow-cyan-500/20 px-3.5 py-1.5 rounded-full text-sm mb-6 transition-opacity duration-500 dark:from-cyan-500 dark:to-accent-purple dark:text-white dark:ring-white/20 dark:shadow-[0_0_18px_rgba(6,182,212,0.45)]" style={{ opacity: showTag ? 1 : 0 }}>
                 {LANDING_ICONS.star}
                 <span>Giáo dục an toàn, khoa học & thân thiện</span>
               </div>
-              <h1 className="text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white leading-tight scroll-animate transition-all duration-700" style={{ transitionDelay: '0ms' }}>
+              <h1 className="landing-hero-title text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white leading-tight scroll-animate transition-all duration-700" style={{ transitionDelay: '0ms' }}>
                 Hiểu về <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-accent-purple filter drop-shadow-sm transition-transform duration-300 hover:brightness-110 hover:scale-[1.02]">cơ thể</span>, <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-purple to-accent-orange filter drop-shadow-sm transition-transform duration-300 hover:brightness-110 hover:scale-[1.02]">tâm lý</span> và giới tính
               </h1>
-              <p className="mt-6 text-lg text-slate-500 dark:text-slate-400 scroll-animate transition-all duration-700" style={{ transitionDelay: '120ms' }}>
+              <p className="landing-subtitle mt-6 text-lg text-slate-500 dark:text-slate-400 scroll-animate transition-all duration-700" style={{ transitionDelay: '120ms' }}>
                 Nền tảng giáo dục giới tính và sinh sản toàn diện cho học sinh THCS, THPT và phụ huynh. Kiến thức khoa học, môi trường an toàn, không phán xét.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -59,10 +59,10 @@ export const LandingPage: React.FC<{ onNavigate: (target: string) => void; isLog
                 </div>
               </div>
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <button onClick={() => onNavigate('Bắt đầu học')} className="flex items-center justify-center text-base font-bold text-white bg-cyan-500 dark:bg-gradient-to-r dark:from-cyan-500 dark:to-accent-purple px-6 py-3 rounded-lg hover:bg-cyan-600 dark:hover:from-cyan-400 dark:hover:to-accent-purple/90 transition-colors shadow-lg shadow-cyan-500/30">
+                <button onClick={() => onNavigate('Bắt đầu học')} className="cta-button flex items-center justify-center text-base font-bold text-white bg-cyan-500 dark:bg-gradient-to-r dark:from-cyan-500 dark:to-accent-purple px-6 py-3 rounded-lg hover:bg-cyan-600 dark:hover:from-cyan-400 dark:hover:to-accent-purple/90 transition-colors shadow-lg shadow-cyan-500/30">
                   Bắt đầu học ngay {LANDING_ICONS.arrow}
                 </button>
-                <button onClick={() => onNavigate('Dành cho phụ huynh')} className="text-base font-bold text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-800 px-6 py-3 rounded-lg hover:bg-slate-100 hover:dark:bg-slate-700 transition-colors border-2 border-slate-200 dark:border-slate-700">
+                <button onClick={() => onNavigate('Dành cho phụ huynh')} className="cta-button text-base font-bold text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-800 px-6 py-3 rounded-lg hover:bg-slate-100 hover:dark:bg-slate-700 transition-colors border-2 border-slate-200 dark:border-slate-700">
                   Dành cho phụ huynh
                 </button>
               </div>
@@ -96,24 +96,24 @@ export const LandingPage: React.FC<{ onNavigate: (target: string) => void; isLog
           </div>
         </section>
 
-        <section className="py-20 bg-white dark:bg-slate-900">
+        <section className="section py-20 bg-white dark:bg-slate-900">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto scroll-animate">
               <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Tại sao chọn DigiCare?</h2>
               <p className="mt-4 text-lg text-slate-500 dark:text-slate-400">Chúng tôi mang đến một môi trường học tập hiện đại, an toàn và hiệu quả, giúp bạn tự tin làm chủ kiến thức.</p>
             </div>
-            <div className="mt-12 grid md:grid-cols-3 gap-8">
-              <div className="group text-center p-8 scroll-animate transition-transform duration-300 filter hover:brightness-105 hover:-translate-y-1">
+            <div className="features-grid mt-12 grid md:grid-cols-3 gap-8">
+              <div className="feature-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-lg shadow-slate-900/5 dark:shadow-[0_0_12px_rgba(15,23,42,0.35)] scroll-animate transition-transform duration-300 filter hover:brightness-105 hover:-translate-y-1 text-center">
                 <div className="flex items-center justify-center h-16 w-16 rounded-full bg-cyan-100 dark:bg-white/10 mx-auto mb-4 ring-1 ring-slate-200 dark:ring-white/10 group-hover:ring-cyan-300 group-hover:shadow-[0_0_12px_rgba(6,182,212,0.35)] group-hover:bg-cyan-500/20 transition-all duration-300">{LANDING_ICONS.privacy}</div>
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white">An toàn & Riêng tư</h3>
                 <p className="mt-2 text-slate-500 dark:text-slate-400">Mọi thông tin và câu hỏi đều được bảo mật tuyệt đối. Học tập trong không gian ẩn danh, không phán xét.</p>
               </div>
-              <div className="group text-center p-8 scroll-animate transition-transform duration-300 filter hover:brightness-105 hover:-translate-y-1" style={{transitionDelay: '150ms'}}>
+              <div className="feature-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-lg shadow-slate-900/5 dark:shadow-[0_0_12px_rgba(15,23,42,0.35)] scroll-animate transition-transform duration-300 filter hover:brightness-105 hover:-translate-y-1 text-center" style={{transitionDelay: '150ms'}}>
                 <div className="flex items-center justify-center h-16 w-16 rounded-full bg-cyan-100 dark:bg-white/10 mx-auto mb-4 ring-1 ring-slate-200 dark:ring-white/10 group-hover:ring-cyan-300 group-hover:shadow-[0_0_12px_rgba(6,182,212,0.35)] group-hover:bg-cyan-500/20 transition-all duration-300">{LANDING_ICONS.science}</div>
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white">Khoa học & Tin cậy</h3>
                 <p className="mt-2 text-slate-500 dark:text-slate-400">Nội dung được biên soạn và kiểm duyệt bởi các chuyên gia y tế và giáo dục hàng đầu.</p>
               </div>
-              <div className="group text-center p-8 scroll-animate transition-transform duration-300 filter hover:brightness-105 hover:-translate-y-1" style={{transitionDelay: '300ms'}}>
+              <div className="feature-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-lg shadow-slate-900/5 dark:shadow-[0_0_12px_rgba(15,23,42,0.35)] scroll-animate transition-transform duration-300 filter hover:brightness-105 hover:-translate-y-1 text-center" style={{transitionDelay: '300ms'}}>
                 <div className="flex items-center justify-center h-16 w-16 rounded-full bg-cyan-100 dark:bg-white/10 mx-auto mb-4 ring-1 ring-slate-200 dark:ring-white/10 group-hover:ring-cyan-300 group-hover:shadow-[0_0_12px_rgba(6,182,212,0.35)] group-hover:bg-cyan-500/20 transition-all duration-300">{LANDING_ICONS.interactive}</div>
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white">Tương tác & Dễ hiểu</h3>
                 <p className="mt-2 text-slate-500 dark:text-slate-400">Học qua video, trò chơi, tình huống mô phỏng giúp kiến thức không còn khô khan.</p>
@@ -135,7 +135,7 @@ export const LandingPage: React.FC<{ onNavigate: (target: string) => void; isLog
                 { icon: LANDING_ICONS.scenarios, title: 'Tình huống tương tác', desc: 'Thực hành các kỹ năng ứng xử qua các tình huống mô phỏng thực tế.' },
                 { icon: LANDING_ICONS.mapSupport, title: 'Bản đồ hỗ trợ', desc: 'Dễ dàng tìm kiếm các địa chỉ tư vấn và hỗ trợ sức khỏe sinh sản tin cậy.' }
               ].map((feature, index) => (
-                <div key={feature.title} className="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-lg shadow-slate-900/5 dark:shadow-[0_0_12px_rgba(15,23,42,0.35)] scroll-animate transition-transform duration-300 filter hover:brightness-105 hover:-translate-y-1 hover:shadow-xl hover:border-cyan-200 dark:hover:border-cyan-400" style={{ transitionDelay: `${index * 150}ms`}}>
+                <div key={feature.title} className="feature-card bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-lg shadow-slate-900/5 dark:shadow-[0_0_12px_rgba(15,23,42,0.35)] scroll-animate transition-transform duration-300 filter hover:brightness-105 hover:-translate-y-1 hover:shadow-xl hover:border-cyan-200 dark:hover:border-cyan-400" style={{ transitionDelay: `${index * 150}ms`}}>
                   {feature.icon}
                   <h3 className="font-bold text-slate-900 dark:text-white mt-4">{feature.title}</h3>
                   <p className="text-slate-500 dark:text-slate-300 text-sm mt-2">{feature.desc}</p>
@@ -145,7 +145,7 @@ export const LandingPage: React.FC<{ onNavigate: (target: string) => void; isLog
           </div>
         </section>
 
-        <section className="py-20">
+        <section className="section py-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto scroll-animate">
               <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Học viên nói gì về chúng tôi</h2>
@@ -178,7 +178,7 @@ export const LandingPage: React.FC<{ onNavigate: (target: string) => void; isLog
           </div>
         </section>
 
-        <section id="contact" className="py-20 bg-white dark:bg-slate-900">
+        <section id="contact" className="section py-20 bg-white dark:bg-slate-900">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-8 items-start">
               <div>

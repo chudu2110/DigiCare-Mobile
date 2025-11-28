@@ -208,7 +208,7 @@ export default function App() {
         }}
         onLogoClick={() => pushAppState(true, userRole, View.HOME)}
       />
-      <main className="container mx-auto p-4 sm:p-6 lg:p-8">
+      <main className="container mx-auto px-3 py-3 pb-20 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
         {renderView()}
       </main>
     </div>

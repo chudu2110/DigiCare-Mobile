@@ -189,13 +189,13 @@ export const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole })
   };
 
   const CourseHero: React.FC = () => (
-    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-cyan-500 via-cyan-600 to-accent-purple p-6 sm:p-8 text-white shadow-xl">
+    <div className="course-hero relative overflow-hidden rounded-2xl bg-gradient-to-r from-cyan-500 via-cyan-600 to-accent-purple p-5 sm:p-8 text-white shadow-xl">
       <div className="relative z-10 flex items-center justify-between gap-6 flex-wrap">
         <div>
           <p className="text-white/80 text-xs uppercase tracking-wider">Hành trình học tập</p>
           <h2 className="text-2xl sm:text-3xl font-extrabold mt-1">Xin chào! Tiếp tục chinh phục kiến thức nhé</h2>
-          <div className="mt-4">
-            <div className="h-3 w-64 bg-white/20 rounded-full">
+          <div className="mt-4 course-progress">
+            <div className="h-3 w-full bg-white/20 rounded-full">
               <div className="h-3 bg-white rounded-full shadow-md" style={{ width: `${overall}%` }}></div>
             </div>
             <p className="mt-1 text-sm font-semibold">Tiến độ tổng thể: {overall}%</p>
@@ -216,7 +216,7 @@ export const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole })
     const isOwned = progress > 0;
     const medal = isOwned ? MEDAL_ICONS[idx % MEDAL_ICONS.length] : '🔒';
     return (
-      <div className={`relative rounded-2xl p-4 transition-all duration-300 ${isOwned ? 'bg-gradient-to-br from-cyan-500/8 to-accent-purple/8 border border-cyan-200 dark:border-cyan-700 shadow-xl hover:shadow-2xl shadow-cyan-500/25 dark:shadow-[0_0_18px_rgba(6,182,212,0.35)] hover:scale-[1.01]' : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl'}`}>
+      <div className={`module-tile relative rounded-2xl p-4 transition-all duration-300 ${isOwned ? 'bg-gradient-to-br from-cyan-500/8 to-accent-purple/8 border border-cyan-200 dark:border-cyan-700 shadow-xl hover:shadow-2xl shadow-cyan-500/25 dark:shadow-[0_0_18px_rgba(6,182,212,0.35)] hover:scale-[1.01]' : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl'}`}>
         {isOwned && (<div className="absolute -top-3 -right-3 w-12 h-12 rounded-full bg-cyan-400/25 blur-xl"></div>)}
         {isOwned && (<div className="absolute -bottom-4 -left-2 w-16 h-16 rounded-full bg-accent-purple/20 blur-xl"></div>)}
         {isOwned && (
@@ -228,18 +228,18 @@ export const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole })
           </div>
         )}
         <div className="flex items-center gap-4">
-          <div className="relative w-14 h-14">
+          <div className="relative w-12 h-12 sm:w-14 sm:h-14">
             <div className={`absolute inset-0 rounded-full ${isOwned ? 'animate-glowing' : ''}`} style={{ background: `conic-gradient(#06b6d4 ${progress * 3.6}deg, #e2e8f0 0deg)` }}></div>
             <div className={`absolute inset-1 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center ring-2 ring-white/60 ${isOwned ? 'animate-ringPulse' : ''}`} title={isOwned ? 'Tiến trình' : 'Chưa bắt đầu'}>
-              <span className={`text-2xl ${isOwned ? 'animate-medalPulse' : ''}`}>{medal}</span>
+              <span className={`text-xl sm:text-2xl ${isOwned ? 'animate-medalPulse' : ''}`}>{medal}</span>
             </div>
             {isOwned && (<span className="absolute -inset-0.5 rounded-full bg-cyan-300/20 blur-md"></span>)}
           </div>
           <div className="flex-1 min-w-0">
-            <h4 className="font-bold text-slate-900 dark:text-white truncate">{module.title}</h4>
-            <p className="text-sm text-slate-500 dark:text-slate-300 truncate">{module.description}</p>
+            <h4 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white truncate">{module.title}</h4>
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-300 truncate">{module.description}</p>
           </div>
-          <span className="text-sm font-bold text-cyan-600 dark:text-cyan-300">{progress}%</span>
+          <span className="text-xs sm:text-sm font-bold text-cyan-600 dark:text-cyan-300">{progress}%</span>
         </div>
       </div>
     );
@@ -363,7 +363,7 @@ export const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole })
     const btnPrimaryEnabled = `${btnBase} font-bold min-w-[96px] bg-cyan-600 hover:bg-cyan-700 text-white`;
     const btnPrimaryDisabled = `${btnBase} font-bold min-w-[96px] bg-slate-300 dark:bg-slate-700 cursor-not-allowed text-white`;
     return (
-      <div className="p-6">
+      <div className="curriculum-outline p-5 sm:p-6">
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <div className="flex items-center gap-2">
             <button onClick={()=>setTab('all')} className={`${btnOutline} ${tab==='all'?'ring-2 ring-cyan-300':''}`}>Tất cả</button>
@@ -425,7 +425,7 @@ export const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole })
     <div className="grid lg:grid-cols-3 xl:grid-cols-4 gap-8 items-start">
       <div className="lg:col-span-2 xl:col-span-3 space-y-8">
         <CourseHero />
-        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div className="dashboard-grid grid md:grid-cols-2 xl:grid-cols-3 gap-4">
           {courses.map((course, idx) => <ModuleTile key={course.id} module={course} idx={idx} />)}
         </div>
         <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl shadow-slate-900/5 dark:shadow-[0_0_18px_rgba(15,23,42,0.35)] border border-slate-200 dark:border-slate-700 overflow-hidden">
