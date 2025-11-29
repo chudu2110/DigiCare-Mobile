@@ -53,6 +53,10 @@ img, video { max-width: 100%; height: auto; }
   .course-hero .course-progress { max-width: 280px; }
   .module-tile { padding: 12px; }
   .curriculum-outline { padding: 12px; }
+  main.container { max-width: 100vw; padding: 12px; }
+  .collection-modal { width: 96vw; max-width: 96vw; max-height: 86vh; }
+  .collection-modal-header { padding: 10px 12px; }
+  .collection-modal-content { padding: 12px; }
 }
 
 /* Tablet */
