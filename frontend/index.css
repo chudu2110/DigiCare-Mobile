@@ -77,3 +77,5 @@ img, video { max-width: 100%; height: auto; }
 .nav-anim-link:hover { transform: translateY(-1px); filter: drop-shadow(0 0 8px rgba(6,182,212,.45)) drop-shadow(0 0 8px rgba(139,92,246,.35)); background-image: linear-gradient(90deg,#06b6d4,#8b5cf6); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .nav-anim-link::after { content: ""; position: absolute; left: 0; bottom: -2px; height: 2px; width: 0; background: linear-gradient(90deg,#06b6d4,#8b5cf6); border-radius: 999px; transition: width .25s ease; }
 .nav-anim-link:hover::after { width: 100%; }
+.tabs-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+.tabs-scroll::-webkit-scrollbar { display: none; }
