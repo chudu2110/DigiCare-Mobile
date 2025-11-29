@@ -214,9 +214,8 @@ export const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole })
   const ModuleTile: React.FC<{ module: CourseModule; idx: number }> = ({ module, idx }) => {
     const progress = module.progress || 0;
     const isOwned = progress > 0;
-    const medal = isOwned ? MEDAL_ICONS[idx % MEDAL_ICONS.length] : '🔒';
     return (
-      <div className={`module-tile relative rounded-2xl p-4 transition-all duration-300 ${isOwned ? 'bg-gradient-to-br from-cyan-500/8 to-accent-purple/8 border border-cyan-200 dark:border-cyan-700 shadow-xl hover:shadow-2xl shadow-cyan-500/25 dark:shadow-[0_0_18px_rgba(6,182,212,0.35)] hover:scale-[1.01]' : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl'}`}>
+      <div className={`module-tile relative overflow-hidden rounded-2xl p-4 transition-all duration-300 ${isOwned ? 'bg-gradient-to-br from-cyan-500/8 to-accent-purple/8 border border-cyan-200 dark:border-cyan-700 shadow-xl hover:shadow-2xl shadow-cyan-500/25 dark:shadow-[0_0_18px_rgba(6,182,212,0.35)] hover:scale-[1.01]' : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl'}`}>
         {isOwned && (<div className="absolute -top-3 -right-3 w-12 h-12 rounded-full bg-cyan-400/25 blur-xl"></div>)}
         {isOwned && (<div className="absolute -bottom-4 -left-2 w-16 h-16 rounded-full bg-accent-purple/20 blur-xl"></div>)}
         {isOwned && (
@@ -231,7 +230,7 @@ export const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole })
           <div className="relative w-12 h-12 sm:w-14 sm:h-14">
             <div className={`absolute inset-0 rounded-full ${isOwned ? 'animate-glowing' : ''}`} style={{ background: `conic-gradient(#06b6d4 ${progress * 3.6}deg, #e2e8f0 0deg)` }}></div>
             <div className={`absolute inset-1 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center ring-2 ring-white/60 ${isOwned ? 'animate-ringPulse' : ''}`} title={isOwned ? 'Tiến trình' : 'Chưa bắt đầu'}>
-              <span className={`text-xl sm:text-2xl ${isOwned ? 'animate-medalPulse' : ''}`}>{medal}</span>
+              {isOwned ? null : <span className="text-base">🔒</span>}
             </div>
             {isOwned && (<span className="absolute -inset-0.5 rounded-full bg-cyan-300/20 blur-md"></span>)}
           </div>
@@ -422,12 +421,9 @@ export const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole })
   };
 
   return (
-    <div className="grid lg:grid-cols-3 xl:grid-cols-4 gap-8 items-start">
+    <div className="max-w-full overflow-hidden grid lg:grid-cols-3 xl:grid-cols-4 gap-6 items-start">
       <div className="lg:col-span-2 xl:col-span-3 space-y-8">
         <CourseHero />
-        <div className="dashboard-grid grid md:grid-cols-2 xl:grid-cols-3 gap-4">
-          {courses.map((course, idx) => <ModuleTile key={course.id} module={course} idx={idx} />)}
-        </div>
         <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl shadow-slate-900/5 dark:shadow-[0_0_18px_rgba(15,23,42,0.35)] border border-slate-200 dark:border-slate-700 overflow-hidden">
           <div className="flex items-center justify-between px-4 sm:px-6 py-4 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
             <div>
@@ -441,28 +437,7 @@ export const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole })
           <CurriculumOutline />
         </div>
       </div>
-      <div className="lg:col-span-1 xl:col-span-1 space-y-6">
-        <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-xl shadow-slate-900/5 dark:shadow-[0_0_18px_rgba(15,23,42,0.35)] border border-slate-200 dark:border-slate-700">
-          <h3 className="font-bold text-xl text-slate-900 dark:text-white mb-4">Bảng xếp hạng</h3>
-          <div className="space-y-3">
-            {LEADERBOARD_DATA.map((user, index) => {
-              const rankStyles: { [key: number]: string } = {
-                0: 'border-yellow-400',
-                1: 'border-slate-300',
-                2: 'border-yellow-600/70',
-              };
-              return (
-                <div key={user.id} className={`flex items-center p-3 rounded-lg ${user.isCurrentUser ? 'bg-cyan-100 dark:bg-cyan-500/10 border-2 border-cyan-500 dark:border-cyan-700' : 'bg-slate-50 dark:bg-slate-900'}`}>
-                  <span className="font-bold text-slate-400 dark:text-slate-500 text-sm w-6 text-center">{index + 1}</span>
-                  <img src={user.avatar} alt={user.name} className={`w-10 h-10 rounded-full mx-3 border-2 ${rankStyles[index] || 'border-transparent'}`} />
-                  <p className={`flex-grow font-semibold ${user.isCurrentUser ? 'text-cyan-600 dark:text-cyan-300' : 'text-slate-800 dark:text-slate-300'}`}>{user.name}</p>
-                  <p className="font-bold text-sm text-slate-500 dark:text-slate-400">{user.xp} XP</p>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </div>
+      
 
       {selectedLesson && (
         <div className="fixed inset-0 z-50">
@@ -479,12 +454,12 @@ export const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole })
       {showCollection && (
         <div className="fixed inset-0 z-50">
           <div className="absolute inset-0 bg-black/50" onClick={()=>setShowCollection(false)}></div>
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92vw] max-w-3xl bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
-            <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+          <div className="collection-modal absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92vw] max-w-3xl max-h-[85vh] bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div className="collection-modal-header px-4 py-3 sm:px-6 sm:py-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
               <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">Bộ sưu tập</h3>
               <button onClick={()=>setShowCollection(false)} className="text-slate-500 hover:text-slate-700 dark:text-slate-300">Đóng</button>
             </div>
-            <div className="p-6">
+            <div className="collection-modal-content p-4 sm:p-6 overflow-y-auto custom-scroll max-h-[calc(85vh-56px)]">
               <CollectionSummary roadmap={roadmap} courses={courses} />
             </div>
           </div>
