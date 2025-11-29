@@ -85,7 +85,7 @@ export const QAPage: React.FC<{ userRole: UserRole }> = ({ userRole }) => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto mb-24">
       <div className="text-center mb-12 relative">
         <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-2">Hỏi Đáp Ẩn Danh</h2>
         <p className="text-lg text-slate-500 dark:text-slate-300 inline-flex items-center gap-2 justify-center">
@@ -110,7 +110,7 @@ export const QAPage: React.FC<{ userRole: UserRole }> = ({ userRole }) => {
               <div className="text-sm font-bold text-slate-700 dark:text-slate-200">Phản hồi từ Admin</div>
               <button onClick={() => setShowPanel(false)} className="text-slate-600 dark:text-slate-300">Đóng</button>
             </div>
-            <div className="mt-3 space-y-3 max-h-64 overflow-auto">
+            <div className="mt-3 space-y-3 max-h-[70vh] overflow-y-auto pr-1 custom-scroll overscroll-y-contain">
               {filteredAnswers.length === 0 ? (
                 <div className="text-slate-500 dark:text-slate-400">Chưa có trả lời nào.</div>
               ) : (

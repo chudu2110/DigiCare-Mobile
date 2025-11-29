@@ -1456,7 +1456,7 @@ const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole }) => {
                         <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Tìm bài học..." className="w-full sm:w-72 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"/>
                     </div>
                 </div>
-                <div className="mt-4 divide-y divide-slate-200 dark:divide-slate-700 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
+                <div className="mt-4 mb-24 divide-y divide-slate-200 dark:divide-slate-700 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
                     {filtered.map((it, idx) => {
                         const isOpen = open.includes(it.id);
                         const primaryLabel = it.status === 'completed' ? 'Ôn lại' : 'Bắt đầu';
@@ -1480,15 +1480,16 @@ const StudentDashboard: React.FC<{ userRole: UserRole }> = ({ userRole }) => {
                                     </div>
                                 </div>
                                 {isOpen && (
-                                    <div className="mt-4 grid sm:grid-cols-2 gap-3">
+                                    <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                                         {[1,2,3].map(n => (
-                                            <div key={n} className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
-                                                <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center text-cyan-600">{n}</div>
-                                                <div className="flex-1 min-w-0">
-                                                    <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 truncate">Nội dung {n}: {it.title.replace('Bài','Phần')}</p>
-                                                    <p className="text-xs text-slate-500 dark:text-slate-400">3–6 phút • Câu hỏi tương tác</p>
+                                            <div key={n} className="group p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 hover:dark:bg-slate-700 transition-colors">
+                                                <div className="flex items-start gap-3">
+                                                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-100 dark:bg-slate-900 flex items-center justify-center text-cyan-600">{n}</div>
+                                                    <div className="flex-1 min-w-0">
+                                                        <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">Nội dung {n}: {it.title.replace('Bài','Phần')}</p>
+                                                        <p className="text-xs text-slate-500 dark:text-slate-400">3–6 phút • Câu hỏi tương tác</p>
+                                                    </div>
                                                 </div>
-                                                <button className="px-2 py-1 text-xs rounded-md bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200">Xem</button>
                                             </div>
                                         ))}
                                     </div>

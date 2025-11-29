@@ -493,7 +493,7 @@ export const MapPage: React.FC = () => {
             <span className="ml-2 text-xs text-red-600 dark:text-red-400">{geoError}</span>
           ) : null}
         </div>
-        <div className="flex flex-col lg:flex-row gap-4 h-[calc(100vh-250px)]">
+        <div className="flex flex-col lg:flex-row gap-4 min-h-[calc(100vh-250px)] mb-24">
           <div className="w-full lg:w-2/3 xl:w-3/4 bg-slate-100 dark:bg-slate-900 rounded-xl relative overflow-hidden">
             <MapContainer
               center={userPos ?? [14.0583, 108.2772]}
@@ -572,7 +572,7 @@ export const MapPage: React.FC = () => {
               {filters.length === 0 ? (
                 <p className="text-sm text-slate-500 dark:text-slate-400 text-center">Chọn bộ lọc để hiển thị kết quả.</p>
               ) : (
-                <div className="h-full overflow-y-auto custom-scroll rounded-md bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-inner">
+                <div className="h-full overflow-y-auto custom-scroll rounded-md bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-inner pb-24">
                   {filters.includes(MapServiceType.CURRENT_EVENTS) && (
                     <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
                       <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-2">Sự kiện đang diễn ra</h4>

@@ -531,7 +531,7 @@ export const LessonPlayer: React.FC<{
             )}
             {subView && (
               <div className="absolute inset-0 z-[30] bg-white dark:bg-slate-900 overflow-hidden">
-                <div className="p-4 sm:p-6 pb-10 pr-2 custom-scroll max-h-[80vh] overflow-y-auto overscroll-y-contain scroll-smooth">
+                <div className="p-4 sm:p-6 pb-24 pr-2 custom-scroll max-h-[88vh] overflow-y-auto overscroll-y-contain scroll-smooth">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">{subView.type === 'foundation' ? 'Chi tiết kiến thức' : 'Gợi ý câu hỏi nhanh'}</h3>
                     <button onClick={()=>setSubView(null)} className="px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">Đóng</button>
